@@ -1,0 +1,28 @@
+{
+  "name": "messenger-botcore",
+  "version": "1.0.0",
+  "description": "A collection of tools for writing Facebook Messenger bots",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AstroCB/BotCore.git"
+  },
+  "keywords": [
+    "bot",
+    "messenger",
+    "facebook"
+  ],
+  "author": "Cameron Bernhardt (AstroCB)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AstroCB/BotCore/issues"
+  },
+  "homepage": "https://github.com/AstroCB/BotCore#readme",
+  "dependencies": {
+    "facebook-chat-api": "github:Schmavery/facebook-chat-api",
+    "memjs": "^1.2.2"
+  }
+}

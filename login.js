@@ -120,19 +120,19 @@ exports.logout = (callback) => {
 
 if (require.main === module) {
     if (process.argv.includes("--logout")) {
-        this.logout(_ => {
+        exports.logout(_ => {
             process.exit();
         });
     } else if (process.argv.includes("--dump")) {
-        this.dumpLogin("appstate.json", _ => {
+        exports.dumpLogin("appstate.json", _ => {
             process.exit();
         });
     } else if (process.argv.includes("--load")) {
-        this.loadLogin("appstate.json", _ => {
+        exports.loadLogin("appstate.json", _ => {
             process.exit();
         });
     } else {
-        this.login(_ => {
+        module.exports(_ => {
             process.exit();
         });
     }

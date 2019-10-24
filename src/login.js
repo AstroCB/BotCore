@@ -12,26 +12,31 @@ const fs = require("fs");
 
 let mem;
 
-/*
+/**
     Login constructor
 
-    Takes in a credentials object with the following fields:
-    Memcachier variables (can be obtained from Memcachier dashboard) for storage
-    - MEMCACHIER_USERNAME: string
-    - MEMCACHIER_PASSWORD: string
-    - MEMCACHIER_SERVERS: string
-    Facebook account variables (for bot login – optional if already logged in once)
-    - EMAIL: string
-    - PASSWORD: string
+    Call this to initialize the login module and log into Facebook using
+    [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
 
-    Takes a callback that takes two fields:
-    - err: string – indicates errors (null if login is successful)
-    - api: facebook-chat-api API object – null if login fails, see
-        https://github.com/Schmavery/facebook-chat-api for details
+    @param {Object} credentials
+    @param {string} credentials.MEMCACHIER_USERNAME Memcachier username (from dashboard) for storage
+    @param {string} credentials.MEMCACHIER_PASSWORD Memcachier password (from dashboard) for storage
+    @param {string} credentials.MEMCACHIER_SERVERS Memcachier servers (from dashboard) for storage
 
-    Takes an optional flag:
-    - forceCreds: bool – if true, forces a login with credentials even if
-        appstate exists
+    @param {string} credentials.EMAIL Facebook account email for login (optional if already logged in once)
+    @param {string} credentials.PASSWORD Facebook account password for login (optional if already logged in once)
+
+    @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
+
+    @param {bool} [forceCreds=false] if true, forces a login with credentials even if
+        appstate exists (optional)
+*/
+
+/**
+    @callback loginCallback
+    @param {string} err indicates errors (null if login is successful)
+    @param {facebook-chat-api.apiObj} api null if login fails, see
+        [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api) for details
 */
 
 module.exports = (credentials, callback, forceCreds = false) => {

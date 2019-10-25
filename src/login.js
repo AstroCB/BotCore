@@ -1,10 +1,11 @@
-/*
-    Login API
-
-    Provides various utilities for managing the login process, including
-    login/logout and import/export of appstate files.
-
-    Encapsulates the login by caching the appstate in memory.
+/**
+ * Login API
+ * Provides various utilities for managing the login process, including
+ * login/logout and import/export of appstate files.
+ * 
+ * Encapsulates the login by caching the appstate in memory.
+ * 
+ * @module login
 */
 
 const messenger = require("facebook-chat-api"); // Chat API
@@ -13,33 +14,37 @@ const fs = require("fs");
 let mem;
 
 /**
-    Login constructor
+ * @typedef {Object} credentialsObj
+ * @property {string} MEMCACHIER_USERNAME Memcachier username (from dashboard) for storage
+ * @property {string} MEMCACHIER_PASSWORD Memcachier password (from dashboard) for storage
+ * @property {string} MEMCACHIER_SERVERS Memcachier servers (from dashboard) for storage
+ * @property {string} EMAIL Facebook account email for login (optional if already logged in once)
+ * @property {string} PASSWORD Facebook account password for login (optional if already logged in once)
+ */
 
-    Call this to initialize the login module and log into Facebook using
-    [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
-
-    @param {Object} credentials
-    @param {string} credentials.MEMCACHIER_USERNAME Memcachier username (from dashboard) for storage
-    @param {string} credentials.MEMCACHIER_PASSWORD Memcachier password (from dashboard) for storage
-    @param {string} credentials.MEMCACHIER_SERVERS Memcachier servers (from dashboard) for storage
-
-    @param {string} credentials.EMAIL Facebook account email for login (optional if already logged in once)
-    @param {string} credentials.PASSWORD Facebook account password for login (optional if already logged in once)
-
-    @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
-
-    @param {bool} [forceCreds=false] if true, forces a login with credentials even if
-        appstate exists (optional)
+/**
+ * @callback loginCallback
+ * @param {string} err indicates errors (null if login is successful)
+ * @param {apiObj} api null if login fails, see
+ * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api) for details
 */
 
 /**
-    @callback loginCallback
-    @param {string} err indicates errors (null if login is successful)
-    @param {facebook-chat-api.apiObj} api null if login fails, see
-        [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api) for details
-*/
+ * @typedef {Object} apiObj
+ * @description An API instance of the facebook-chat-api (see 
+ * [here](https://github.com/Schmavery/facebook-chat-api) for details)
+ */
 
-module.exports = (credentials, callback, forceCreds = false) => {
+/**
+ * Call this to initialize the login module and log into Facebook using
+ * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
+ * 
+ * @param {credentialsObj} credentials
+ * @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
+ * @param {Boolean} [forceCreds=false] if true, forces a login with credentials even if
+ * appstate exists (optional)
+*/
+exports.login = (credentials, callback, forceCreds = false) => {
     // Initialize mem variable for external storage API (Memcachier)
     mem = require("memjs").Client.create(credentials.MEMCACHIER_SERVERS, {
         "username": credentials.MEMCACHIER_USERNAME,
@@ -92,6 +97,23 @@ module.exports = (credentials, callback, forceCreds = false) => {
     }
 }
 
+/**
+ * @callback genericErrCb
+ * @param {string} err Message specifying the error (or null if none)
+ */
+
+/**
+ * @callback errSuccCb
+ * @param {string} err Message specifying the error (or null if none)
+ * @param {Boolean} success Boolean specifying whether the operation was successful
+ */
+
+/**
+ * Dumps the current login into a specified file.
+ * 
+ * @param {string} filename Name of the file specifying where to store the login
+ * @param {genericErrCb} callback Callback to use after writing the file 
+ */
 exports.dumpLogin = (filename, callback) => {
     mem.get("appstate", (err, val) => {
         if (!err) {
@@ -101,6 +123,12 @@ exports.dumpLogin = (filename, callback) => {
     });
 }
 
+/**
+ * Reads a new login into memory from a file.
+ * @param {string} filename Name of the file specifying where the imported login
+ * is stored
+ * @param {genericErrCb} callback Callback to use after reading the login
+ */
 exports.loadLogin = (filename, callback) => {
     fs.readFile(filename, (err, val) => {
         if (!err) {
@@ -110,6 +138,10 @@ exports.loadLogin = (filename, callback) => {
     });
 }
 
+/**
+ * Logs out of Facebook.
+ * @param {errSuccCb} callback
+ */
 exports.logout = (callback) => {
     mem.delete("appstate", err => {
         let success = true;

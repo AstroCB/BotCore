@@ -104,9 +104,9 @@ exports.login = (credentials, callback, forceCreds = false) => {
  */
 
 /**
- * @callback errSuccCb
+ * @callback errDataCb
  * @param {string} err Message specifying the error (or null if none)
- * @param {Boolean} success Boolean specifying whether the operation was successful
+ * @param {Object} success Data returned from the successful operation
  */
 
 /**
@@ -141,7 +141,7 @@ exports.loadLogin = (filename, callback) => {
 
 /**
  * Logs out of Facebook.
- * @param {errSuccCb} callback
+ * @param {errDataCb} callback
  */
 exports.logout = (callback) => {
     mem.delete("appstate", err => {
@@ -156,6 +156,70 @@ exports.logout = (callback) => {
     });
 }
 
+/**
+ * Converts a (NodeJS) facebook-chat-api appstate into a (Python) fb-chat
+ * session.
+ * 
+ * @param {string} filename Name of the file whose location contains the
+ * appstate data to be converted
+ * @param {errDataCb} callback Callback to use after conversion completed,
+ * passed the converted session
+ */
+exports.convert = (filename, callback) => {
+    fs.readFile(filename, (err, file) => {
+        if (err) {
+            callback(err);
+        } else {
+            // Extract the required information from the appstate
+            let data = JSON.parse(file);
+            let attrs = ["c_user", "datr", "fr", "sb", "spin", "xs"];
+            let output = attrs.reduce((obj, key) => {
+                obj[key] = searchAttribute(data, key);
+                return obj;
+            }, {});
+            output["noscript"] = "1"; // Special attr
+
+            callback(null, output);
+        }
+    });
+}
+
+/**
+ * A variant of `convert` that directly outputs the converted session to a file.
+ * 
+ * @param {string} appstate Location of appstate to be converted
+ * @param {string} output Where to place the converted session
+ * @param {genericErrCb} callback Callback called after conversion
+ */
+exports.convertToFile = (appstate, output, callback) => {
+    this.convert(appstate, (err, session) => {
+        if (err) {
+            callback(err);
+        } else {
+            fs.writeFile(output, JSON.stringify(session), null, callback);
+        }
+    });
+}
+
+/** 
+ * facebook-chat-api appstates are an array of objects containing "key" and
+ * "value" keys and additional properties (that the Python API doesn't use).
+ * 
+ * This function searches and extracts the value for the given key, discarding
+ * the other information.
+ * 
+ * @param {Object} data facebook-chat-api appstate
+ * @param {string} key The key to locate
+ * @returns {string} The value of the key (or null if not found)
+*/
+function searchAttribute(data, key) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].key == key) {
+            return data[i].value;
+        }
+    }
+}
+
 if (require.main === module) {
     const parser = new ArgumentParser({ addHelp: true });
     parser.addArgument('--MEMCACHIER-USERNAME', { required: true });
@@ -164,6 +228,7 @@ if (require.main === module) {
     parser.addArgument('--logout', { nargs: 0 });
     parser.addArgument('--dump-login', { nargs: 0 });
     parser.addArgument('--load-login', { nargs: 0 });
+    parser.addArgument('--convert-login', { nargs: 0 });
     const args = parser.parseArgs();
 
     exports.login(args, _ => {
@@ -177,6 +242,10 @@ if (require.main === module) {
             });
         } else if (args.load_login !== null) {
             exports.loadLogin("appstate.json", _ => {
+                process.exit();
+            });
+        } else if (args.convert_login !== null) {
+            this.convertToFile("appstate.json", "session.txt", _ => {
                 process.exit();
             });
         } else {

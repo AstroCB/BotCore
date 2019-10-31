@@ -10,6 +10,7 @@
 
 const messenger = require("facebook-chat-api"); // Chat API
 const fs = require("fs");
+const ArgumentParser = require("argparse").ArgumentParser;
 
 let mem;
 
@@ -156,21 +157,30 @@ exports.logout = (callback) => {
 }
 
 if (require.main === module) {
-    if (process.argv.includes("--logout")) {
-        exports.logout(_ => {
+    const parser = new ArgumentParser({ addHelp: true });
+    parser.addArgument('--MEMCACHIER-USERNAME', { required: true });
+    parser.addArgument('--MEMCACHIER-PASSWORD', { required: true });
+    parser.addArgument('--MEMCACHIER-SERVERS', { required: true });
+    parser.addArgument('--logout', { nargs: 0 });
+    parser.addArgument('--dump-login', { nargs: 0 });
+    parser.addArgument('--load-login', { nargs: 0 });
+    const args = parser.parseArgs();
+
+    exports.login(args, _ => {
+        if (args.logout !== null) {
+            exports.logout(_ => {
+                process.exit();
+            });
+        } else if (args.dump_login !== null) {
+            exports.dumpLogin("appstate.json", _ => {
+                process.exit();
+            });
+        } else if (args.load_login !== null) {
+            exports.loadLogin("appstate.json", _ => {
+                process.exit();
+            });
+        } else {
             process.exit();
-        });
-    } else if (process.argv.includes("--dump")) {
-        exports.dumpLogin("appstate.json", _ => {
-            process.exit();
-        });
-    } else if (process.argv.includes("--load")) {
-        exports.loadLogin("appstate.json", _ => {
-            process.exit();
-        });
-    } else {
-        module.exports(_ => {
-            process.exit();
-        });
-    }
+        }
+    });
 }

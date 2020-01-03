@@ -23,7 +23,7 @@
   "homepage": "https://github.com/AstroCB/BotCore#readme",
   "dependencies": {
     "argparse": "^1.0.10",
-    "facebook-chat-api": "github:7osCraft/facebook-chat-api",
+    "facebook-chat-api": "github:Schmavery/facebook-chat-api",
     "memjs": "^1.2.2"
   }
 }

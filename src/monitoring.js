@@ -74,7 +74,7 @@ function monitorLoop() {
     }
 }
 
-function sendError(err) {
+function sendError(e) {
     const errMsg = `Error detected with ${name}: ${e}.`;
     // Attempt to re-login
     if (retryFunc) {

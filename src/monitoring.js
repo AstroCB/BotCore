@@ -9,6 +9,7 @@
  * @module monitoring
 */
 
+const {spawn} = require("child_process");
 const login = require("./login");
 
 // Required monitoring config vars
@@ -78,7 +79,7 @@ function sendError(e) {
     const errMsg = `Error detected with ${name}: ${e}.`;
     // Attempt to re-login
     if (retryFunc) {
-        login(credentials, (err, api) => {
+        login.login(credentials, (err, api) => {
             if (!err) {
                 retryFunc(api);
                 api.sendMessage(`${errMsg} Re-login successful; passing new login to retry callback...`, maintainer);

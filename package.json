@@ -1,6 +1,6 @@
 {
   "name": "messenger-botcore",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A collection of tools for writing Facebook Messenger bots",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/AstroCB/BotCore#readme",
   "dependencies": {
     "argparse": "^1.0.10",
-    "facebook-chat-api": "github:lequanglam/facebook-chat-api#pullfix",
+    "facebook-chat-api": "github:Schmavery/facebook-chat-api",
     "fca-unofficial": "github:fca-unofficial/fca-unofficial",
     "memjs": "^1.2.2"
   }

@@ -8,7 +8,7 @@
  * @module login
 */
 
-const messenger = require("fca-unofficial"); // Chat API
+const messenger = require("facebook-chat-api"); // Chat API
 const fs = require("fs");
 const ArgumentParser = require("argparse").ArgumentParser;
 

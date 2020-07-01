@@ -39,6 +39,7 @@ let mem;
 /**
  * Call this to initialize the login module and log into Facebook using
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
+ * See examples/ for example usage.
  * 
  * @param {credentialsObj} credentials
  * @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
@@ -157,8 +158,9 @@ exports.logout = (callback) => {
 }
 
 /**
- * Converts a (NodeJS) facebook-chat-api appstate into a (Python) fb-chat
- * session.
+ * Converts a (NodeJS) facebook-chat-api appstate into a (Python) fbchat
+ * session. See the examples/ directory for how this can be used to create
+ * an fbchat bot with BotCore.
  * 
  * @param {string} filename Name of the file whose location contains the
  * appstate data to be converted

@@ -15,11 +15,11 @@
         -   [Parameters][11]
     -   [convertToFile][12]
         -   [Parameters][13]
--   [loginCallback][14]
-    -   [Parameters][15]
--   [apiObj][16]
--   [credentialsObj][17]
-    -   [Properties][18]
+-   [credentialsObj][14]
+    -   [Properties][15]
+-   [loginCallback][16]
+    -   [Parameters][17]
+-   [apiObj][18]
 -   [genericErrCb][19]
     -   [Parameters][20]
 -   [errDataCb][21]
@@ -45,6 +45,7 @@ Encapsulates the login by caching the appstate in memory.
 
 Call this to initialize the login module and log into Facebook using
 [facebook-chat-api][31].
+See examples/ for example usage.
 
 #### Parameters
 
@@ -82,8 +83,9 @@ Logs out of Facebook.
 
 ### convert
 
-Converts a (NodeJS) facebook-chat-api appstate into a (Python) fb-chat
-session.
+Converts a (NodeJS) facebook-chat-api appstate into a (Python) fbchat
+session. See the examples/ directory for how this can be used to create
+an fbchat bot with BotCore.
 
 #### Parameters
 
@@ -102,26 +104,9 @@ A variant of `convert` that directly outputs the converted session to a file.
 -   `output` **[string][35]** Where to place the converted session
 -   `callback` **[genericErrCb][36]** Callback called after conversion
 
-## loginCallback
-
-Type: [Function][38]
-
-### Parameters
-
--   `err` **[string][35]** indicates errors (null if login is successful)
--   `api` **[apiObj][39]** null if login fails, see
-    [facebook-chat-api][31] for details
-
-## apiObj
-
-An API instance of the facebook-chat-api (see 
-[here][31] for details)
-
-Type: [Object][40]
-
 ## credentialsObj
 
-Type: [Object][40]
+Type: [Object][38]
 
 ### Properties
 
@@ -131,9 +116,26 @@ Type: [Object][40]
 -   `EMAIL` **[string][35]** Facebook account email for login (optional if already logged in once)
 -   `PASSWORD` **[string][35]** Facebook account password for login (optional if already logged in once)
 
+## loginCallback
+
+Type: [Function][39]
+
+### Parameters
+
+-   `err` **[string][35]** indicates errors (null if login is successful)
+-   `api` **[apiObj][40]** null if login fails, see
+    [facebook-chat-api][31] for details
+
+## apiObj
+
+An API instance of the facebook-chat-api (see 
+[here][31] for details)
+
+Type: [Object][38]
+
 ## genericErrCb
 
-Type: [Function][38]
+Type: [Function][39]
 
 ### Parameters
 
@@ -141,12 +143,12 @@ Type: [Function][38]
 
 ## errDataCb
 
-Type: [Function][38]
+Type: [Function][39]
 
 ### Parameters
 
 -   `err` **[string][35]** Message specifying the error (or null if none)
--   `success` **[Object][40]** Data returned from the successful operation
+-   `success` **[Object][38]** Data returned from the successful operation
 
 ## searchAttribute
 
@@ -158,7 +160,7 @@ the other information.
 
 ### Parameters
 
--   `data` **[Object][40]** facebook-chat-api appstate
+-   `data` **[Object][38]** facebook-chat-api appstate
 -   `key` **[string][35]** The key to locate
 
 Returns **[string][35]** The value of the key (or null if not found)
@@ -178,7 +180,7 @@ Begins monitoring a specified API instance.
 
 #### Parameters
 
--   `apiInstance` **[apiObj][39]** An instance of the facebook-chat-api to monitor
+-   `apiInstance` **[apiObj][40]** An instance of the facebook-chat-api to monitor
 -   `maintainerId` **[string][35]** User ID of the maintainer to notify on failures
 -   `botName` **[string][35]** Name of the bot running
 -   `credentialsObj` **[credentialsObj][32]** Object containing the user credentials
@@ -195,11 +197,11 @@ Cancels the monitoring of the current bot process.
 
 ## retryLoginCallback
 
-Type: [Function][38]
+Type: [Function][39]
 
 ### Parameters
 
--   `api` **[apiObj][39]** A new instance of the facebook-chat-api after a successful login
+-   `api` **[apiObj][40]** A new instance of the facebook-chat-api after a successful login
 
 [1]: #login
 
@@ -227,15 +229,15 @@ Type: [Function][38]
 
 [13]: #parameters-5
 
-[14]: #logincallback
+[14]: #credentialsobj
 
-[15]: #parameters-6
+[15]: #properties
 
-[16]: #apiobj
+[16]: #logincallback
 
-[17]: #credentialsobj
+[17]: #parameters-6
 
-[18]: #properties
+[18]: #apiobj
 
 [19]: #genericerrcb
 
@@ -275,11 +277,11 @@ Type: [Function][38]
 
 [37]: #errdatacb
 
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[39]: #apiobj
+[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[40]: #apiobj
 
 [41]: https://nodejs.org/api/process.html
 

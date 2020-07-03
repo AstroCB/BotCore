@@ -36,13 +36,14 @@ let mem;
  * 1. *Environment variables*: you can store these keys as environment variables, which will prevent
  * them from being stored in any file in your project. When logging in, simply pass `process.env` as your
  * credentials object, because it will contain all of the required keys needed to log in successfully!
- * You can find an example of how to configure your credentials this way in the `examples/` directory in
- * the BotCore repo.
+ * You can find an example of how to configure your credentials this way in `examples/credentials.sh`
+ * in the BotCore repo.
  * 
  * 2. *A gitignored credentials file*: you can create a file (`credentials.js` or similar) that contains
- * all of your required credentials keys as exported variables from the module, and then simply import
- * this module wherever you need to log in. Don't forget to add this credentials file to your
- * `.gitignore` so that your credentials aren't exposed!
+ * all of your required credentials keys as exported variables, and then simply import this as a JS
+ * module wherever you need to log in. Don't forget to add this credentials file to your `.gitignore`
+ * so that your credentials aren't exposed! You can find an example of how to configure your credentials
+ * this way in `examples/credentials.js` in the BotCore repo.
  * 
  * These are two of many possible ways you could choose to store this information. Keep in mind that
  * regardless of which method you choose, you will have to eventually pass a JavaScript object containing

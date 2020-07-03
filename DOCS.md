@@ -106,7 +106,42 @@ A variant of `convert` that directly outputs the converted session to a file.
 
 ## credentialsObj
 
-Type: [Object][38]
+The credentials object is required for logging in to any application using BotCore. The
+idea of it is to store your (sensitive) credentials separately from the source of your project, in a
+place that won't be accidentally committed to a repo and published for the world to see. It consists
+of several required keys that allow BotCore to log in to both Facebook and the MemCachier service
+(used to cache logins) on your behalf. The keys are listed and explained below.
+
+> **NOTE**: to obtain the values for the `MEMCACHIER_` variables, you must [sign up for a free
+> MemCachier account][38] and create a cache. From there, you
+> will be able to retrieve the requisite info from your dashboard.
+
+I recommend the following two methods for storing your credentials object due to their ease of use:
+
+1.  _Environment variables_: you can store these keys as environment variables, which will prevent
+    them from being stored in any file in your project. When logging in, simply pass `process.env` as your
+    credentials object, because it will contain all of the required keys needed to log in successfully!
+    You can find an example of how to configure your credentials this way in the `examples/` directory in
+    the BotCore repo.
+
+2.  _A gitignored credentials file_: you can create a file (`credentials.js` or similar) that contains
+    all of your required credentials keys as exported variables from the module, and then simply import
+    this module wherever you need to log in. Don't forget to add this credentials file to your
+    `.gitignore` so that your credentials aren't exposed!
+
+These are two of many possible ways you could choose to store this information. Keep in mind that
+regardless of which method you choose, you will have to eventually pass a JavaScript object containing
+the following keys to the [login][1] function, so you will need to be able to access this
+information at runtime.
+
+Also keep in mind that the `EMAIL` and `PASSWORD` keys are only required for login if you do not have
+an active Facebook login session stored in BotCore (i.e. you have logged in recently, and Facebook
+hasn't decided to terminate your session yet). BotCore caches your recent logins to prevent too many
+hard (username/password) logins, unless you use the `forceLogin` option. If you are using several
+bots with BotCore, consider storing your `EMAIL` and `PASSWORD` keys with only one of them, and
+only using your `MEMCACHIER_` variables to log in from other bots.
+
+Type: [Object][39]
 
 ### Properties
 
@@ -118,12 +153,12 @@ Type: [Object][38]
 
 ## loginCallback
 
-Type: [Function][39]
+Type: [Function][40]
 
 ### Parameters
 
 -   `err` **[string][35]** indicates errors (null if login is successful)
--   `api` **[apiObj][40]** null if login fails, see
+-   `api` **[apiObj][41]** null if login fails, see
     [facebook-chat-api][31] for details
 
 ## apiObj
@@ -131,11 +166,11 @@ Type: [Function][39]
 An API instance of the facebook-chat-api (see 
 [here][31] for details)
 
-Type: [Object][38]
+Type: [Object][39]
 
 ## genericErrCb
 
-Type: [Function][39]
+Type: [Function][40]
 
 ### Parameters
 
@@ -143,12 +178,12 @@ Type: [Function][39]
 
 ## errDataCb
 
-Type: [Function][39]
+Type: [Function][40]
 
 ### Parameters
 
 -   `err` **[string][35]** Message specifying the error (or null if none)
--   `success` **[Object][38]** Data returned from the successful operation
+-   `success` **[Object][39]** Data returned from the successful operation
 
 ## searchAttribute
 
@@ -160,7 +195,7 @@ the other information.
 
 ### Parameters
 
--   `data` **[Object][38]** facebook-chat-api appstate
+-   `data` **[Object][39]** facebook-chat-api appstate
 -   `key` **[string][35]** The key to locate
 
 Returns **[string][35]** The value of the key (or null if not found)
@@ -180,15 +215,15 @@ Begins monitoring a specified API instance.
 
 #### Parameters
 
--   `apiInstance` **[apiObj][40]** An instance of the facebook-chat-api to monitor
+-   `apiInstance` **[apiObj][41]** An instance of the facebook-chat-api to monitor
 -   `maintainerId` **[string][35]** User ID of the maintainer to notify on failures
 -   `botName` **[string][35]** Name of the bot running
 -   `credentialsObj` **[credentialsObj][32]** Object containing the user credentials
--   `botProcessRef` **[process][41]** Node.js process to monitor (optional)
--   `retryLoginCallback` **[retryLoginCallback][42]** A callback to send a new API
+-   `botProcessRef` **[process][42]** Node.js process to monitor (optional)
+-   `retryLoginCallback` **[retryLoginCallback][43]** A callback to send a new API
     instance to if login failed and a re-attempted login succeeded (optional –
     omitting this callback is equivalent to disabling the retry login feature)
--   `pingIntervalInMinutes` **[number][43]** The number of minutes between
+-   `pingIntervalInMinutes` **[number][44]** The number of minutes between
     checks that the bot is still running (optional, default `10`)
 
 ### cancelMonitoring
@@ -197,11 +232,11 @@ Cancels the monitoring of the current bot process.
 
 ## retryLoginCallback
 
-Type: [Function][39]
+Type: [Function][40]
 
 ### Parameters
 
--   `api` **[apiObj][40]** A new instance of the facebook-chat-api after a successful login
+-   `api` **[apiObj][41]** A new instance of the facebook-chat-api after a successful login
 
 [1]: #login
 
@@ -277,14 +312,16 @@ Type: [Function][39]
 
 [37]: #errdatacb
 
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[38]: https://www.memcachier.com/users/signup
 
-[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[40]: #apiobj
+[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[41]: https://nodejs.org/api/process.html
+[41]: #apiobj
 
-[42]: #retrylogincallback
+[42]: https://nodejs.org/api/process.html
 
-[43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[43]: #retrylogincallback
+
+[44]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

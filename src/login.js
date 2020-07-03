@@ -19,8 +19,8 @@ let mem;
  * @property {string} MEMCACHIER_USERNAME Memcachier username (from dashboard) for storage
  * @property {string} MEMCACHIER_PASSWORD Memcachier password (from dashboard) for storage
  * @property {string} MEMCACHIER_SERVERS Memcachier servers (from dashboard) for storage
- * @property {string} EMAIL Facebook account email for login (optional if already logged in once)
- * @property {string} PASSWORD Facebook account password for login (optional if already logged in once)
+ * @property {string} FACEBOOK_EMAIL Facebook account email for login (optional if already logged in once)
+ * @property {string} FACEBOOK_PASSWORD Facebook account password for login (optional if already logged in once)
  * @description The credentials object is required for logging in to any application using BotCore. The
  * idea of it is to store your (sensitive) credentials separately from the source of your project, in a
  * place that won't be accidentally committed to a repo and published for the world to see. It consists
@@ -49,12 +49,13 @@ let mem;
  * the following keys to the {@link login} function, so you will need to be able to access this
  * information at runtime.
  * 
- * Also keep in mind that the `EMAIL` and `PASSWORD` keys are only required for login if you do not have
- * an active Facebook login session stored in BotCore (i.e. you have logged in recently, and Facebook
- * hasn't decided to terminate your session yet). BotCore caches your recent logins to prevent too many
- * hard (username/password) logins, unless you use the `forceLogin` option. If you are using several
- * bots with BotCore, consider storing your `EMAIL` and `PASSWORD` keys with only one of them, and
- * only using your `MEMCACHIER_` variables to log in from other bots.
+ * Also keep in mind that the `FACEBOOK_EMAIL` and `FACEBOOK_PASSWORD` keys are only required for login
+ * if you do not have an active Facebook login session stored in BotCore (i.e. you have logged in
+ * recently, and Facebook hasn't decided to terminate your session yet). BotCore caches your recent
+ * logins to prevent too many hard (username/password) logins, unless you use the `forceLogin` option.
+ * If you are using several bots with BotCore, consider storing your `FACEBOOK_EMAIL` and
+ * `FACEBOOK_PASSWORD` keys with only one of them, and only using your `MEMCACHIER_` variables to log in
+ * from other bots.
  */
 
 /**
@@ -103,8 +104,8 @@ exports.login = (credentials, callback, forceCreds = false) => {
     function withCreds(callback) {
         console.log("Logging in with credentials...");
         messenger({
-            email: credentials.EMAIL,
-            password: credentials.PASSWORD
+            email: credentials.FACEBOOK_EMAIL,
+            password: credentials.FACEBOOK_PASSWORD
         }, (err, api) => {
             if (err) return console.error(`Fatal error: failed login with credentials`);
 

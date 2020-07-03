@@ -134,12 +134,13 @@ regardless of which method you choose, you will have to eventually pass a JavaSc
 the following keys to the [login][1] function, so you will need to be able to access this
 information at runtime.
 
-Also keep in mind that the `EMAIL` and `PASSWORD` keys are only required for login if you do not have
-an active Facebook login session stored in BotCore (i.e. you have logged in recently, and Facebook
-hasn't decided to terminate your session yet). BotCore caches your recent logins to prevent too many
-hard (username/password) logins, unless you use the `forceLogin` option. If you are using several
-bots with BotCore, consider storing your `EMAIL` and `PASSWORD` keys with only one of them, and
-only using your `MEMCACHIER_` variables to log in from other bots.
+Also keep in mind that the `FACEBOOK_EMAIL` and `FACEBOOK_PASSWORD` keys are only required for login
+if you do not have an active Facebook login session stored in BotCore (i.e. you have logged in
+recently, and Facebook hasn't decided to terminate your session yet). BotCore caches your recent
+logins to prevent too many hard (username/password) logins, unless you use the `forceLogin` option.
+If you are using several bots with BotCore, consider storing your `FACEBOOK_EMAIL` and
+`FACEBOOK_PASSWORD` keys with only one of them, and only using your `MEMCACHIER_` variables to log in
+from other bots.
 
 Type: [Object][39]
 
@@ -148,8 +149,8 @@ Type: [Object][39]
 -   `MEMCACHIER_USERNAME` **[string][35]** Memcachier username (from dashboard) for storage
 -   `MEMCACHIER_PASSWORD` **[string][35]** Memcachier password (from dashboard) for storage
 -   `MEMCACHIER_SERVERS` **[string][35]** Memcachier servers (from dashboard) for storage
--   `EMAIL` **[string][35]** Facebook account email for login (optional if already logged in once)
--   `PASSWORD` **[string][35]** Facebook account password for login (optional if already logged in once)
+-   `FACEBOOK_EMAIL` **[string][35]** Facebook account email for login (optional if already logged in once)
+-   `FACEBOOK_PASSWORD` **[string][35]** Facebook account password for login (optional if already logged in once)
 
 ## loginCallback
 

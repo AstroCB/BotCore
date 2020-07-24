@@ -12,6 +12,12 @@ const messenger = require("facebook-chat-api"); // Chat API
 const fs = require("fs");
 const ArgumentParser = require("argparse").ArgumentParser;
 
+// Default behavior: minimal logging and auto-approve recent logins
+const defaultOptions = {
+    "logLevel": "error",
+    "forceLogin": true
+}
+
 let mem;
 
 /**
@@ -73,6 +79,14 @@ let mem;
  */
 
 /**
+ * @typedef {Object} optionsObj
+ * @description An object containing options to be passed to the underlying
+ * facebook-chat-api instance on login (see
+ * [here](https://github.com/Schmavery/facebook-chat-api/blob/master/DOCS.md#apisetoptionsoptions)
+ * for details)
+ */
+
+/**
  * Call this to initialize the login module and log into Facebook using
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
  * See examples/ for example usage.
@@ -80,9 +94,12 @@ let mem;
  * @param {credentialsObj} credentials
  * @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
  * @param {Boolean} [forceCreds=false] if true, forces a login with credentials even if
- * appstate exists (optional)
+ * appstate exists
+ * @param {optionsObj} [options=defaultOptions] any options you wish to pass to the API on login;
+ * by default, sets `logLevel` to `error` and `forceLogin` to `true` (auto-approves errors asking
+ * for approval of recent logins for simplicity)
 */
-exports.login = (credentials, callback, forceCreds = false) => {
+exports.login = (credentials, callback, forceCreds = false, options = defaultOptions) => {
     // Initialize mem variable for external storage API (Memcachier)
     mem = require("memjs").Client.create(credentials.MEMCACHIER_SERVERS, {
         "username": credentials.MEMCACHIER_USERNAME,
@@ -94,7 +111,7 @@ exports.login = (credentials, callback, forceCreds = false) => {
         console.log("Logging in with saved appstate...");
         messenger({
             appState: JSON.parse(appstate)
-        }, (err, api) => {
+        }, options, (err, api) => {
             if (err) {
                 withCreds(callback);
             } else {
@@ -107,7 +124,7 @@ exports.login = (credentials, callback, forceCreds = false) => {
         messenger({
             email: credentials.FACEBOOK_EMAIL,
             password: credentials.FACEBOOK_PASSWORD
-        }, (err, api) => {
+        }, options, (err, api) => {
             if (err) return console.error(`Fatal error: failed login with credentials`);
 
             mem.set("appstate", JSON.stringify(api.getAppState()), {}, merr => {

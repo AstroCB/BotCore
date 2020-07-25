@@ -256,6 +256,20 @@ exports.convertToFile = (appstate, output, callback) => {
     });
 }
 
+/**
+ * Exposes the underlying memjs memcache instance, which can be used for
+ * temporary storage. Use wisely, or you may break your BotCore installation!
+ * 
+ * > NOTE: if you call this before logging in with {@link login},
+ * it will return nothing; the memcache is not initialized until you log in.
+ * 
+ * @returns {Object} The underlying BotCore [memjs](https://memjs.netlify.app)
+ * instance
+ */
+exports.getMemCache = () => {
+    return mem;
+}
+
 /** 
  * facebook-chat-api appstates are an array of objects containing "key" and
  * "value" keys and additional properties (that the Python API doesn't use).

@@ -15,24 +15,25 @@
         -   [Parameters][11]
     -   [convertToFile][12]
         -   [Parameters][13]
--   [credentialsObj][14]
-    -   [Properties][15]
--   [loginCallback][16]
-    -   [Parameters][17]
--   [apiObj][18]
--   [optionsObj][19]
--   [genericErrCb][20]
-    -   [Parameters][21]
--   [errDataCb][22]
-    -   [Parameters][23]
--   [searchAttribute][24]
-    -   [Parameters][25]
--   [monitoring][26]
-    -   [monitor][27]
-        -   [Parameters][28]
-    -   [cancelMonitoring][29]
--   [retryLoginCallback][30]
-    -   [Parameters][31]
+    -   [getMemCache][14]
+-   [credentialsObj][15]
+    -   [Properties][16]
+-   [loginCallback][17]
+    -   [Parameters][18]
+-   [apiObj][19]
+-   [optionsObj][20]
+-   [genericErrCb][21]
+    -   [Parameters][22]
+-   [errDataCb][23]
+    -   [Parameters][24]
+-   [searchAttribute][25]
+    -   [Parameters][26]
+-   [monitoring][27]
+    -   [monitor][28]
+        -   [Parameters][29]
+    -   [cancelMonitoring][30]
+-   [retryLoginCallback][31]
+    -   [Parameters][32]
 
 ## login
 
@@ -45,16 +46,16 @@ Encapsulates the login by caching the appstate in memory.
 ### login
 
 Call this to initialize the login module and log into Facebook using
-[facebook-chat-api][32].
+[facebook-chat-api][33].
 See examples/ for example usage.
 
 #### Parameters
 
--   `credentials` **[credentialsObj][33]** 
--   `callback` **[loginCallback][34]** called after login completed (successfully or unsuccessfully)
--   `forceCreds` **[Boolean][35]** if true, forces a login with credentials even if
+-   `credentials` **[credentialsObj][34]** 
+-   `callback` **[loginCallback][35]** called after login completed (successfully or unsuccessfully)
+-   `forceCreds` **[Boolean][36]** if true, forces a login with credentials even if
     appstate exists (optional, default `false`)
--   `options` **[optionsObj][36]** any options you wish to pass to the API on login;
+-   `options` **[optionsObj][37]** any options you wish to pass to the API on login;
     by default, sets `logLevel` to `error` and `forceLogin` to `true` (auto-approves errors asking
     for approval of recent logins for simplicity) (optional, default `defaultOptions`)
 
@@ -64,8 +65,8 @@ Dumps the current login into a specified file.
 
 #### Parameters
 
--   `filename` **[string][37]** Name of the file specifying where to store the login
--   `callback` **[genericErrCb][38]** Callback to use after writing the file
+-   `filename` **[string][38]** Name of the file specifying where to store the login
+-   `callback` **[genericErrCb][39]** Callback to use after writing the file
 
 ### loadLogin
 
@@ -73,9 +74,9 @@ Reads a new login into memory from a file.
 
 #### Parameters
 
--   `filename` **[string][37]** Name of the file specifying where the imported login
+-   `filename` **[string][38]** Name of the file specifying where the imported login
     is stored
--   `callback` **[genericErrCb][38]** Callback to use after reading the login
+-   `callback` **[genericErrCb][39]** Callback to use after reading the login
 
 ### logout
 
@@ -83,7 +84,7 @@ Logs out of Facebook.
 
 #### Parameters
 
--   `callback` **[errDataCb][39]** 
+-   `callback` **[errDataCb][40]** 
 
 ### convert
 
@@ -93,9 +94,9 @@ an fbchat bot with BotCore.
 
 #### Parameters
 
--   `filename` **[string][37]** Name of the file whose location contains the
+-   `filename` **[string][38]** Name of the file whose location contains the
     appstate data to be converted
--   `callback` **[errDataCb][39]** Callback to use after conversion completed,
+-   `callback` **[errDataCb][40]** Callback to use after conversion completed,
     passed the converted session
 
 ### convertToFile
@@ -104,9 +105,20 @@ A variant of `convert` that directly outputs the converted session to a file.
 
 #### Parameters
 
--   `appstate` **[string][37]** Location of appstate to be converted
--   `output` **[string][37]** Where to place the converted session
--   `callback` **[genericErrCb][38]** Callback called after conversion
+-   `appstate` **[string][38]** Location of appstate to be converted
+-   `output` **[string][38]** Where to place the converted session
+-   `callback` **[genericErrCb][39]** Callback called after conversion
+
+### getMemCache
+
+Exposes the underlying memjs memcache instance, which can be used for
+temporary storage. Use wisely, or you may break your BotCore installation!
+
+> NOTE: if you call this before logging in with [login][1],
+> it will return nothing; the memcache is not initialized until you log in.
+
+Returns **[Object][41]** The underlying BotCore [memjs][42]
+instance
 
 ## credentialsObj
 
@@ -117,7 +129,7 @@ of several required keys that allow BotCore to log in to both Facebook and the M
 (used to cache logins) on your behalf. The keys are listed and explained below.
 
 > **NOTE**: to obtain the values for the `MEMCACHIER_` variables, you must [sign up for a free
-> MemCachier account][40] and create a cache. From there, you
+> MemCachier account][43] and create a cache. From there, you
 > will be able to retrieve the requisite info from your dashboard.
 
 I recommend the following two methods for storing your credentials object due to their ease of use:
@@ -151,26 +163,26 @@ Type: [Object][41]
 
 ### Properties
 
--   `MEMCACHIER_USERNAME` **[string][37]** Memcachier username (from dashboard) for storage
--   `MEMCACHIER_PASSWORD` **[string][37]** Memcachier password (from dashboard) for storage
--   `MEMCACHIER_SERVERS` **[string][37]** Memcachier servers (from dashboard) for storage
--   `FACEBOOK_EMAIL` **[string][37]** Facebook account email for login (optional if already logged in once)
--   `FACEBOOK_PASSWORD` **[string][37]** Facebook account password for login (optional if already logged in once)
+-   `MEMCACHIER_USERNAME` **[string][38]** Memcachier username (from dashboard) for storage
+-   `MEMCACHIER_PASSWORD` **[string][38]** Memcachier password (from dashboard) for storage
+-   `MEMCACHIER_SERVERS` **[string][38]** Memcachier servers (from dashboard) for storage
+-   `FACEBOOK_EMAIL` **[string][38]** Facebook account email for login (optional if already logged in once)
+-   `FACEBOOK_PASSWORD` **[string][38]** Facebook account password for login (optional if already logged in once)
 
 ## loginCallback
 
-Type: [Function][42]
+Type: [Function][44]
 
 ### Parameters
 
--   `err` **[string][37]** indicates errors (null if login is successful)
--   `api` **[apiObj][43]** null if login fails, see
-    [facebook-chat-api][32] for details
+-   `err` **[string][38]** indicates errors (null if login is successful)
+-   `api` **[apiObj][45]** null if login fails, see
+    [facebook-chat-api][33] for details
 
 ## apiObj
 
 An API instance of the facebook-chat-api (see 
-[here][32] for details)
+[here][33] for details)
 
 Type: [Object][41]
 
@@ -178,26 +190,26 @@ Type: [Object][41]
 
 An object containing options to be passed to the underlying
 facebook-chat-api instance on login (see
-[here][44]
+[here][46]
 for details)
 
 Type: [Object][41]
 
 ## genericErrCb
 
-Type: [Function][42]
+Type: [Function][44]
 
 ### Parameters
 
--   `err` **[string][37]** Message specifying the error (or null if none)
+-   `err` **[string][38]** Message specifying the error (or null if none)
 
 ## errDataCb
 
-Type: [Function][42]
+Type: [Function][44]
 
 ### Parameters
 
--   `err` **[string][37]** Message specifying the error (or null if none)
+-   `err` **[string][38]** Message specifying the error (or null if none)
 -   `success` **[Object][41]** Data returned from the successful operation
 
 ## searchAttribute
@@ -211,9 +223,9 @@ the other information.
 ### Parameters
 
 -   `data` **[Object][41]** facebook-chat-api appstate
--   `key` **[string][37]** The key to locate
+-   `key` **[string][38]** The key to locate
 
-Returns **[string][37]** The value of the key (or null if not found)
+Returns **[string][38]** The value of the key (or null if not found)
 
 ## monitoring
 
@@ -230,15 +242,15 @@ Begins monitoring a specified API instance.
 
 #### Parameters
 
--   `apiInstance` **[apiObj][43]** An instance of the facebook-chat-api to monitor
--   `maintainerId` **[string][37]** User ID of the maintainer to notify on failures
--   `botName` **[string][37]** Name of the bot running
--   `credentialsObj` **[credentialsObj][33]** Object containing the user credentials
--   `botProcessRef` **[process][45]** Node.js process to monitor (optional)
--   `retryLoginCallback` **[retryLoginCallback][46]** A callback to send a new API
+-   `apiInstance` **[apiObj][45]** An instance of the facebook-chat-api to monitor
+-   `maintainerId` **[string][38]** User ID of the maintainer to notify on failures
+-   `botName` **[string][38]** Name of the bot running
+-   `credentialsObj` **[credentialsObj][34]** Object containing the user credentials
+-   `botProcessRef` **[process][47]** Node.js process to monitor (optional)
+-   `retryLoginCallback` **[retryLoginCallback][48]** A callback to send a new API
     instance to if login failed and a re-attempted login succeeded (optional –
     omitting this callback is equivalent to disabling the retry login feature)
--   `pingIntervalInMinutes` **[number][47]** The number of minutes between
+-   `pingIntervalInMinutes` **[number][49]** The number of minutes between
     checks that the bot is still running (optional, default `10`)
 
 ### cancelMonitoring
@@ -247,11 +259,11 @@ Cancels the monitoring of the current bot process.
 
 ## retryLoginCallback
 
-Type: [Function][42]
+Type: [Function][44]
 
 ### Parameters
 
--   `api` **[apiObj][43]** A new instance of the facebook-chat-api after a successful login
+-   `api` **[apiObj][45]** A new instance of the facebook-chat-api after a successful login
 
 [1]: #login
 
@@ -279,70 +291,74 @@ Type: [Function][42]
 
 [13]: #parameters-5
 
-[14]: #credentialsobj
+[14]: #getmemcache
 
-[15]: #properties
+[15]: #credentialsobj
 
-[16]: #logincallback
+[16]: #properties
 
-[17]: #parameters-6
+[17]: #logincallback
 
-[18]: #apiobj
+[18]: #parameters-6
 
-[19]: #optionsobj
+[19]: #apiobj
 
-[20]: #genericerrcb
+[20]: #optionsobj
 
-[21]: #parameters-7
+[21]: #genericerrcb
 
-[22]: #errdatacb
+[22]: #parameters-7
 
-[23]: #parameters-8
+[23]: #errdatacb
 
-[24]: #searchattribute
+[24]: #parameters-8
 
-[25]: #parameters-9
+[25]: #searchattribute
 
-[26]: #monitoring
+[26]: #parameters-9
 
-[27]: #monitor
+[27]: #monitoring
 
-[28]: #parameters-10
+[28]: #monitor
 
-[29]: #cancelmonitoring
+[29]: #parameters-10
 
-[30]: #retrylogincallback
+[30]: #cancelmonitoring
 
-[31]: #parameters-11
+[31]: #retrylogincallback
 
-[32]: https://github.com/Schmavery/facebook-chat-api
+[32]: #parameters-11
 
-[33]: #credentialsobj
+[33]: https://github.com/Schmavery/facebook-chat-api
 
-[34]: #logincallback
+[34]: #credentialsobj
 
-[35]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[35]: #logincallback
 
-[36]: #optionsobj
+[36]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[37]: #optionsobj
 
-[38]: #genericerrcb
+[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[39]: #errdatacb
+[39]: #genericerrcb
 
-[40]: https://www.memcachier.com/users/signup
+[40]: #errdatacb
 
 [41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[42]: https://memjs.netlify.app
 
-[43]: #apiobj
+[43]: https://www.memcachier.com/users/signup
 
-[44]: https://github.com/Schmavery/facebook-chat-api/blob/master/DOCS.md#apisetoptionsoptions
+[44]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[45]: https://nodejs.org/api/process.html
+[45]: #apiobj
 
-[46]: #retrylogincallback
+[46]: https://github.com/Schmavery/facebook-chat-api/blob/master/DOCS.md#apisetoptionsoptions
 
-[47]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[47]: https://nodejs.org/api/process.html
+
+[48]: #retrylogincallback
+
+[49]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

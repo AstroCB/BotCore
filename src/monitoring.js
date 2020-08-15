@@ -76,7 +76,7 @@ function monitorLoop() {
 }
 
 function sendError(e) {
-    const errMsg = `Error detected with ${name}: ${e}.`;
+    const errMsg = `Error detected with ${name}: ${JSON.stringify(e)}.`;
     // Attempt to re-login
     if (retryFunc) {
         login.login(credentials, (err, api) => {

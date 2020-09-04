@@ -9,7 +9,7 @@
  * @module monitoring
 */
 
-const {spawn} = require("child_process");
+const { spawn } = require("child_process");
 const login = require("./login");
 
 // Required monitoring config vars
@@ -61,6 +61,19 @@ exports.cancelMonitoring = () => {
         clearInterval(monitoringInterval);
     }
 }
+
+/**
+ * Safe function to call from other packages that will alert the maintainer if
+ * monitoring is on, and no-op otherwise.
+ * 
+ * @param {string} msg Message for the maintainer about the issue
+ */
+exports.criticalError = msg => {
+    if (maintainer) {
+        api.sendMessage(`Critical error detected: ${msg}`, maintainer);
+    }
+}
+
 
 function monitorLoop() {
     // Try a basic operation to see if login is still valid

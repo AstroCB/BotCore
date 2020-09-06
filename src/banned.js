@@ -14,6 +14,7 @@ const login = require("./login");
 const monitoring = require("./monitoring");
 
 const colName = "banned";
+let cachedUserList;
 
 /**
  * @callback usersCallback
@@ -50,12 +51,19 @@ const colName = "banned";
  * @param {usersCallback} callback 
  */
 exports.getUsers = callback => {
-    const mem = login.getMemCache();
+    let usedCache = false;
+    if (cachedUserList !== undefined) {
+        usedCache = true;
+        callback(null, cachedUserList);
+    }
 
+    const mem = login.getMemCache();
     mem.get(colName, (err, data) => {
         if (err) return callback(new Error("Failed to retrieve memory instance"));
 
-        callback(null, data ? JSON.parse(data) : []);
+        cachedUserList = data ? JSON.parse(data) : [];
+
+        if (!usedCache) callback(null, cachedUserList);
     });
 }
 
@@ -68,8 +76,9 @@ exports.isUser = (userId, callback) => {
     this.getUsers((err, users) => {
         if (err) {
             // In case of a db error, return that the user is banned to be safe
-            // alert maintainer if monitoring is on
-            monitoring.criticalError(`In isUser: ${err}`);
+            // Alert maintainer if monitoring is on so that it doesn't just
+            // look like a silent failure
+            monitoring.criticalError(`Failed to determine user ban status: ${err}`);
             callback(true);
         }
 
@@ -91,6 +100,7 @@ exports.addUser = (userId, callback) => {
         if (!isBanned) {
             users.push(userId);
             mem.set(colName, JSON.stringify(users), {});
+            cachedUserList = users;
         }
         callback(!isBanned);
     });
@@ -110,6 +120,7 @@ exports.removeUser = (userId, callback) => {
         if (isBanned) {
             users = users.filter(id => id != userId);
             mem.set(colName, JSON.stringify(users), {});
+            cachedUserList = users;
         }
         callback(isBanned);
     });

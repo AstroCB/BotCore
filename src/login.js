@@ -15,7 +15,10 @@ const ArgumentParser = require("argparse").ArgumentParser;
 // Default behavior: minimal logging and auto-approve recent logins
 const defaultOptions = {
     "logLevel": "error",
-    "forceLogin": true
+    "forceLogin": true,
+    // TODO: Get rid of this option. We currently have to use this outdated user agent to force Facebook
+    // to give us an older version of the login page that doesn't include new checks that break the API.
+    "userAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36"
 }
 
 let mem;

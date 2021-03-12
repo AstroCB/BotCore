@@ -1,8 +1,8 @@
 // Login API
-exports.login = require("./src/login");
+export * from "./src/login";
 
 // Monitoring API
-exports.monitoring = require("./src/monitoring");
+export * from "./src/monitoring";
 
 // Ban API
-exports.banned = require("./src/banned")
+export * from "./src/banned";

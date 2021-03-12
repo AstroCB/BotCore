@@ -9,8 +9,8 @@
  * @module monitoring
 */
 
-const { spawn } = require("child_process");
-const login = require("./login");
+import { spawn } from "child_process";
+import { login } from "./login";
 
 // Required monitoring config vars
 let monitoringInterval;
@@ -40,7 +40,7 @@ let retryFunc;
  * @param {number} [pingIntervalInMinutes=10] The number of minutes between
  * checks that the bot is still running
  */
-exports.monitor = (apiInstance, maintainerId, botName, credentialsObj, botProcessRef, retryLoginCallback, pingIntervalInMinutes = 10) => {
+export function monitor(apiInstance, maintainerId, botName, credentialsObj, botProcessRef, retryLoginCallback, pingIntervalInMinutes = 10) {
     if (monitoringInterval) return console.error("Already monitoring an instance");
 
     const pingInterval = pingIntervalInMinutes * 60 * 1000;
@@ -56,7 +56,7 @@ exports.monitor = (apiInstance, maintainerId, botName, credentialsObj, botProces
 /**
  * Cancels the monitoring of the current bot process.
  */
-exports.cancelMonitoring = () => {
+export function cancelMonitoring() {
     if (monitoringInterval) {
         clearInterval(monitoringInterval);
     }
@@ -68,7 +68,7 @@ exports.cancelMonitoring = () => {
  * 
  * @param {string} msg Message for the maintainer about the issue
  */
-exports.criticalError = msg => {
+export function criticalError(msg) {
     if (maintainer) {
         api.sendMessage(`Critical error detected: ${msg}`, maintainer);
     }
@@ -82,7 +82,7 @@ function monitorLoop() {
             if (err) {
                 sendError(err);
             }
-        })
+        });
     } catch (e) {
         sendError(e);
     }
@@ -92,7 +92,7 @@ function sendError(e) {
     const errMsg = `Error detected with ${name}: ${JSON.stringify(e)}.`;
     // Attempt to re-login
     if (retryFunc) {
-        login.login(credentials, (err, api) => {
+        login(credentials, (err, api) => {
             if (!err) {
                 retryFunc(api);
                 api.sendMessage(`${errMsg} Re-login successful; passing new login to retry callback...`, maintainer);
@@ -100,7 +100,7 @@ function sendError(e) {
                 // Login failed; just restart the process
                 restartProcess();
             }
-        })
+        });
     } else {
         // Attempt to send message to maintainer, although it will likely fail
         api.sendMessage(errMsg, maintainer);
@@ -111,7 +111,7 @@ function sendError(e) {
 function restartProcess() {
     spawn(botProcess.argv[1], botProcess.argv.slice(2), {
         detached: true,
-        stdio: ['ignore', out, err]
+        stdio: ["ignore", "out", "err"]
     }).unref();
     botProcess.exit();
 }

@@ -3,6 +3,7 @@
   "version": "2.3.2",
   "description": "A collection of tools for writing Facebook Messenger bots.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "node index.js"
   },

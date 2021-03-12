@@ -8,9 +8,10 @@
  * @module login
 */
 
-const messenger = require("facebook-chat-api"); // Chat API
-const fs = require("fs");
-const ArgumentParser = require("argparse").ArgumentParser;
+import messenger from "facebook-chat-api"; // Chat API
+import { writeFileSync, readFile, writeFile } from "fs";
+import { ArgumentParser } from "argparse";
+import { Client } from "memjs";
 
 // Default behavior: minimal logging and auto-approve recent logins
 const defaultOptions = {
@@ -19,7 +20,7 @@ const defaultOptions = {
     // TODO: Get rid of this option. We currently have to use this outdated user agent to force Facebook
     // to give us an older version of the login page that doesn't include new checks that break the API.
     "userAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36"
-}
+};
 
 let mem;
 
@@ -71,7 +72,7 @@ let mem;
 /**
  * @callback loginCallback
  * @param {string} err indicates errors (null if login is successful)
- * @param {apiObj} api null if login fails, see
+ * @param {apiObj} api null if login fails, see
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api) for details
 */
 
@@ -96,15 +97,15 @@ let mem;
  * 
  * @param {credentialsObj} credentials
  * @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
- * @param {Boolean} [forceCreds=false] if true, forces a login with credentials even if
+ * @param {Boolean} [forceCreds=false] if true, forces a login with credentials even if
  * appstate exists
  * @param {optionsObj} [options=defaultOptions] any options you wish to pass to the API on login;
  * by default, sets `logLevel` to `error` and `forceLogin` to `true` (auto-approves errors asking
  * for approval of recent logins for simplicity)
 */
-exports.login = (credentials, callback, forceCreds = false, options = defaultOptions) => {
+export function login(credentials, callback, forceCreds = false, options = defaultOptions) {
     // Initialize mem variable for external storage API (Memcachier)
-    mem = require("memjs").Client.create(credentials.MEMCACHIER_SERVERS, {
+    mem = Client.create(credentials.MEMCACHIER_SERVERS, {
         "username": credentials.MEMCACHIER_USERNAME,
         "password": credentials.MEMCACHIER_PASSWORD
     });
@@ -128,7 +129,7 @@ exports.login = (credentials, callback, forceCreds = false, options = defaultOpt
             email: credentials.FACEBOOK_EMAIL,
             password: credentials.FACEBOOK_PASSWORD
         }, options, (err, api) => {
-            if (err) return console.error(`Fatal error: failed login with credentials`);
+            if (err) return console.error("Fatal error: failed login with credentials");
 
             mem.set("appstate", JSON.stringify(api.getAppState()), {}, merr => {
                 if (err) {
@@ -172,10 +173,10 @@ exports.login = (credentials, callback, forceCreds = false, options = defaultOpt
  * @param {string} filename Name of the file specifying where to store the login
  * @param {genericErrCb} callback Callback to use after writing the file 
  */
-exports.dumpLogin = (filename, callback) => {
+export function dumpLogin(filename, callback) {
     mem.get("appstate", (err, val) => {
         if (!err) {
-            fs.writeFileSync(filename, val.toString());
+            writeFileSync(filename, val.toString());
         }
         callback(err);
     });
@@ -187,8 +188,8 @@ exports.dumpLogin = (filename, callback) => {
  * is stored
  * @param {genericErrCb} callback Callback to use after reading the login
  */
-exports.loadLogin = (filename, callback) => {
-    fs.readFile(filename, (err, val) => {
+export function loadLogin(filename, callback) {
+    readFile(filename, (err, val) => {
         if (!err) {
             mem.set("appstate", JSON.stringify(JSON.parse(val)));
         }
@@ -200,7 +201,7 @@ exports.loadLogin = (filename, callback) => {
  * Logs out of Facebook.
  * @param {errDataCb} callback
  */
-exports.logout = (callback) => {
+export function logout(callback) {
     mem.delete("appstate", err => {
         let success = true;
         if (err) {
@@ -223,8 +224,8 @@ exports.logout = (callback) => {
  * @param {errDataCb} callback Callback to use after conversion completed,
  * passed the converted session
  */
-exports.convert = (filename, callback) => {
-    fs.readFile(filename, (err, file) => {
+export function convert(filename, callback) {
+    readFile(filename, (err, file) => {
         if (err) {
             callback(err);
         } else {
@@ -249,12 +250,12 @@ exports.convert = (filename, callback) => {
  * @param {string} output Where to place the converted session
  * @param {genericErrCb} callback Callback called after conversion
  */
-exports.convertToFile = (appstate, output, callback) => {
+export function convertToFile(appstate, output, callback) {
     this.convert(appstate, (err, session) => {
         if (err) {
             callback(err);
         } else {
-            fs.writeFile(output, JSON.stringify(session), null, callback);
+            writeFile(output, JSON.stringify(session), null, callback);
         }
     });
 }
@@ -269,7 +270,7 @@ exports.convertToFile = (appstate, output, callback) => {
  * @returns {Object} The underlying BotCore [memjs](https://memjs.netlify.app)
  * instance
  */
-exports.getMemCache = () => {
+export function getMemCache() {
     return mem;
 }
 
@@ -294,30 +295,30 @@ function searchAttribute(data, key) {
 
 if (require.main === module) {
     const parser = new ArgumentParser({ addHelp: true });
-    parser.addArgument('--MEMCACHIER-USERNAME', { required: true });
-    parser.addArgument('--MEMCACHIER-PASSWORD', { required: true });
-    parser.addArgument('--MEMCACHIER-SERVERS', { required: true });
-    parser.addArgument('--logout', { nargs: 0 });
-    parser.addArgument('--dump-login', { nargs: 0 });
-    parser.addArgument('--load-login', { nargs: 0 });
-    parser.addArgument('--convert-login', { nargs: 0 });
+    parser.addArgument("--MEMCACHIER-USERNAME", { required: true });
+    parser.addArgument("--MEMCACHIER-PASSWORD", { required: true });
+    parser.addArgument("--MEMCACHIER-SERVERS", { required: true });
+    parser.addArgument("--logout", { nargs: 0 });
+    parser.addArgument("--dump-login", { nargs: 0 });
+    parser.addArgument("--load-login", { nargs: 0 });
+    parser.addArgument("--convert-login", { nargs: 0 });
     const args = parser.parseArgs();
 
-    exports.login(args, _ => {
+    login(args, () => {
         if (args.logout !== null) {
-            exports.logout(_ => {
+            logout(() => {
                 process.exit();
             });
         } else if (args.dump_login !== null) {
-            exports.dumpLogin("appstate.json", _ => {
+            dumpLogin("appstate.json", () => {
                 process.exit();
             });
         } else if (args.load_login !== null) {
-            exports.loadLogin("appstate.json", _ => {
+            loadLogin("appstate.json", () => {
                 process.exit();
             });
         } else if (args.convert_login !== null) {
-            this.convertToFile("appstate.json", "session.txt", _ => {
+            this.convertToFile("appstate.json", "session.txt", () => {
                 process.exit();
             });
         } else {

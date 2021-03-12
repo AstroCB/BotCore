@@ -10,8 +10,8 @@
  * @module banned
 */
 
-const login = require("./login");
-const monitoring = require("./monitoring");
+import { getMemCache } from "./login";
+import { criticalError } from "./monitoring";
 
 const colName = "banned";
 let cachedUserList;
@@ -50,14 +50,14 @@ let cachedUserList;
  * 
  * @param {usersCallback} callback 
  */
-exports.getUsers = callback => {
+export function getUsers(callback) {
     let usedCache = false;
     if (cachedUserList !== undefined) {
         usedCache = true;
         callback(null, cachedUserList);
     }
 
-    const mem = login.getMemCache();
+    const mem = getMemCache();
     mem.get(colName, (err, data) => {
         if (err) return callback(new Error("Failed to retrieve memory instance"));
 
@@ -72,18 +72,18 @@ exports.getUsers = callback => {
  * @param {string} userId 
  * @param {isBannedCallback} callback 
  */
-exports.isUser = (userId, callback) => {
+export function isUser(userId, callback) {
     this.getUsers((err, users) => {
         if (err) {
             // In case of a db error, return that the user is banned to be safe
             // Alert maintainer if monitoring is on so that it doesn't just
             // look like a silent failure
-            monitoring.criticalError(`Failed to determine user ban status: ${err}`);
+            criticalError(`Failed to determine user ban status: ${err}`);
             callback(true);
         }
 
         callback(users.includes(userId), users);
-    })
+    });
 }
 
 /**
@@ -93,8 +93,8 @@ exports.isUser = (userId, callback) => {
  * @param {string} userId ID of the user to ban
  * @param {successCallback} callback
  */
-exports.addUser = (userId, callback) => {
-    const mem = login.getMemCache();
+export function addUser(userId, callback) {
+    const mem = getMemCache();
 
     this.isUser(userId, (isBanned, users) => {
         if (!isBanned) {
@@ -113,8 +113,8 @@ exports.addUser = (userId, callback) => {
  * @param {string} userId ID of the user to ban
  * @param {successCallback} callback
  */
-exports.removeUser = (userId, callback) => {
-    const mem = login.getMemCache();
+export function removeUser(userId, callback) {
+    const mem = getMemCache();
 
     this.isUser(userId, (isBanned, users) => {
         if (isBanned) {
@@ -133,6 +133,6 @@ exports.removeUser = (userId, callback) => {
  * @param {msgObj} msg 
  * @param {isBannedCallback} callback 
  */
-exports.isMessage = (msg, callback) => {
+export function isMessage(msg, callback) {
     this.isUser(msg.senderID, callback);
 }

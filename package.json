@@ -26,5 +26,11 @@
     "facebook-chat-api": "github:AstroCB/facebook-chat-api#lookup-by-mid",
     "fca-unofficial": "github:fca-unofficial/fca-unofficial",
     "memjs": "^1.2.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.21.0",
+    "typescript": "^4.2.3"
   }
 }

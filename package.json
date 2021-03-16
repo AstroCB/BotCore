@@ -2,10 +2,12 @@
   "name": "messenger-botcore",
   "version": "2.3.2",
   "description": "A collection of tools for writing Facebook Messenger bots.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "test": "node index.js"
+    "prepublish": "build",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,9 @@
     "url": "https://github.com/AstroCB/BotCore/issues"
   },
   "homepage": "https://github.com/AstroCB/BotCore#readme",
+  "files": [
+    "dist/**/*"
+  ],
   "dependencies": {
     "argparse": "^1.0.10",
     "facebook-chat-api": "github:AstroCB/facebook-chat-api#lookup-by-mid",
@@ -29,6 +34,9 @@
     "memjs": "^1.2.2"
   },
   "devDependencies": {
+    "@types/argparse": "^2.0.5",
+    "@types/facebook-chat-api": "github:legion44/typed-facebook-chat-api",
+    "@types/memjs": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.21.0",

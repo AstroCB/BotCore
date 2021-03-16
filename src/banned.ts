@@ -12,45 +12,17 @@
 
 import { getMemCache } from "./login";
 import { criticalError } from "./monitoring";
+import { BannedUserList, IsBannedCallback, SuccessCallback, UsersCallback } from "./types";
 
 const colName = "banned";
-let cachedUserList;
-
-/**
- * @callback usersCallback
- * @param {string} err indicates errors (null if user retrieval is successful)
- * @param {[string]} users list of IDs of users currently banned in the system
-*/
-
-/**
- * @callback isBannedCallback
- * @param {boolean} isBanned true if the user is banned, false otherwise
- * @param {[string]} users list of IDs of users currently banned in the system
-*/
-
-/**
- * @callback successCallback
- * @param {boolean} success true if the operation succeeded (i.e. the user was
- * banned or unbanned), false otherwise (if the user was already banned/
- * unbanned to begin with)
- */
-
-/**
- * @typedef {Object} msgObj
- * @property {string} senderID the ID of the message's sender
- * 
- * @description A message object as received from a callback to
- * facebook-chat-api's `listen` function (see
- * [here](https://github.com/Schmavery/facebook-chat-api/blob/master/DOCS.md#listen)
- * for details)
- */
+let cachedUserList: BannedUserList;
 
 /**
  * Provides a list of user IDs representing users who are currently banned.
  * 
- * @param {usersCallback} callback 
+ * @param callback 
  */
-export function getUsers(callback) {
+export function getUsers(callback: UsersCallback): void {
     let usedCache = false;
     if (cachedUserList !== undefined) {
         usedCache = true;
@@ -58,10 +30,10 @@ export function getUsers(callback) {
     }
 
     const mem = getMemCache();
-    mem.get(colName, (err, data) => {
+    mem.get(colName, (err: Error | null, data: Buffer | null) => {
         if (err) return callback(new Error("Failed to retrieve memory instance"));
 
-        cachedUserList = data ? JSON.parse(data) : [];
+        cachedUserList = data ? JSON.parse(data.toString()) : [];
 
         if (!usedCache) callback(null, cachedUserList);
     });
@@ -69,11 +41,11 @@ export function getUsers(callback) {
 
 /**
  * Tests whether the given user is banned
- * @param {string} userId 
- * @param {isBannedCallback} callback 
+ * @param userId 
+ * @param callback 
  */
-export function isUser(userId, callback) {
-    this.getUsers((err, users) => {
+export function isUser(userId: string, callback: IsBannedCallback): void {
+    getUsers((err, users) => {
         if (err) {
             // In case of a db error, return that the user is banned to be safe
             // Alert maintainer if monitoring is on so that it doesn't just
@@ -82,7 +54,8 @@ export function isUser(userId, callback) {
             callback(true);
         }
 
-        callback(users.includes(userId), users);
+        const isBanned = users ? users.includes(userId) : false;
+        callback(isBanned, users);
     });
 }
 
@@ -90,14 +63,14 @@ export function isUser(userId, callback) {
  * Adds the user represented by the provided user ID to the list of banned
  * users
  * 
- * @param {string} userId ID of the user to ban
- * @param {successCallback} callback
+ * @param userId ID of the user to ban
+ * @param callback
  */
-export function addUser(userId, callback) {
+export function addUser(userId: string, callback: SuccessCallback): void {
     const mem = getMemCache();
 
-    this.isUser(userId, (isBanned, users) => {
-        if (!isBanned) {
+    isUser(userId, (isBanned, users) => {
+        if (!isBanned && users) {
             users.push(userId);
             mem.set(colName, JSON.stringify(users), {});
             cachedUserList = users;
@@ -110,14 +83,14 @@ export function addUser(userId, callback) {
  * Removes the user represented by the provided user ID to the list of banned
  * users
  * 
- * @param {string} userId ID of the user to ban
- * @param {successCallback} callback
+ * @param userId ID of the user to ban
+ * @param callback
  */
-export function removeUser(userId, callback) {
+export function removeUser(userId: string, callback: SuccessCallback): void {
     const mem = getMemCache();
 
-    this.isUser(userId, (isBanned, users) => {
-        if (isBanned) {
+    isUser(userId, (isBanned, users) => {
+        if (isBanned && users) {
             users = users.filter(id => id != userId);
             mem.set(colName, JSON.stringify(users), {});
             cachedUserList = users;
@@ -130,9 +103,9 @@ export function removeUser(userId, callback) {
  * Utility function to quickly check whether to accept a message based on
  * whether its sender is banned
  * 
- * @param {msgObj} msg 
- * @param {isBannedCallback} callback 
+ * @param msg 
+ * @param callback 
  */
-export function isMessage(msg, callback) {
-    this.isUser(msg.senderID, callback);
+export function isMessage(msg: Facebook.IReceivedMessage, callback: IsBannedCallback): void {
+    isUser(msg.senderID, callback);
 }

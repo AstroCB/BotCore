@@ -12,9 +12,10 @@ import messenger from "facebook-chat-api"; // Chat API
 import { writeFileSync, readFile, writeFile } from "fs";
 import { ArgumentParser } from "argparse";
 import { Client } from "memjs";
+import { ErrDataCallback, GenericErrCallback, LoginCallback, LoginCredentials, StringDict } from "./types";
 
 // Default behavior: minimal logging and auto-approve recent logins
-const defaultOptions = {
+const defaultOptions: Facebook.IOptions = {
     "logLevel": "error",
     "forceLogin": true,
     // TODO: Get rid of this option. We currently have to use this outdated user agent to force Facebook
@@ -22,7 +23,7 @@ const defaultOptions = {
     "userAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Mobile Safari/537.36"
 };
 
-let mem;
+let mem: Client;
 
 /**
  * @typedef {Object} credentialsObj
@@ -70,24 +71,9 @@ let mem;
  */
 
 /**
- * @callback loginCallback
- * @param {string} err indicates errors (null if login is successful)
- * @param {apiObj} api null if login fails, see
- * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api) for details
-*/
-
-/**
  * @typedef {Object} apiObj
  * @description An API instance of the facebook-chat-api (see 
  * [here](https://github.com/Schmavery/facebook-chat-api) for details)
- */
-
-/**
- * @typedef {Object} optionsObj
- * @description An object containing options to be passed to the underlying
- * facebook-chat-api instance on login (see
- * [here](https://github.com/Schmavery/facebook-chat-api/blob/master/DOCS.md#apisetoptionsoptions)
- * for details)
  */
 
 /**
@@ -95,23 +81,23 @@ let mem;
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
  * See examples/ for example usage.
  * 
- * @param {credentialsObj} credentials
- * @param {loginCallback} callback called after login completed (successfully or unsuccessfully)
- * @param {Boolean} [forceCreds=false] if true, forces a login with credentials even if
+ * @param credentials
+ * @param callback called after login completed (successfully or unsuccessfully)
+ * @param {boolean} [forceCreds=false] if true, forces a login with credentials even if
  * appstate exists
- * @param {optionsObj} [options=defaultOptions] any options you wish to pass to the API on login;
+ * @param [options=defaultOptions] any options you wish to pass to the API on login;
  * by default, sets `logLevel` to `error` and `forceLogin` to `true` (auto-approves errors asking
  * for approval of recent logins for simplicity)
 */
-export function login(credentials, callback, forceCreds = false, options = defaultOptions) {
+export const login = (credentials: LoginCredentials, callback: LoginCallback, forceCreds = false, options = defaultOptions): void => {
     // Initialize mem variable for external storage API (Memcachier)
     mem = Client.create(credentials.MEMCACHIER_SERVERS, {
-        "username": credentials.MEMCACHIER_USERNAME,
-        "password": credentials.MEMCACHIER_PASSWORD
+        username: credentials.MEMCACHIER_USERNAME,
+        password: credentials.MEMCACHIER_PASSWORD
     });
 
     // Login utility funcs
-    function withAppstate(appstate, callback) {
+    function withAppstate(appstate: string, callback: LoginCallback) {
         console.log("Logging in with saved appstate...");
         messenger({
             appState: JSON.parse(appstate)
@@ -123,7 +109,7 @@ export function login(credentials, callback, forceCreds = false, options = defau
             }
         });
     }
-    function withCreds(callback) {
+    function withCreds(callback: LoginCallback) {
         console.log("Logging in with credentials...");
         messenger({
             email: credentials.FACEBOOK_EMAIL,
@@ -148,60 +134,49 @@ export function login(credentials, callback, forceCreds = false, options = defau
         // Use stored appstate if exists, otherwise fallback to creds
         mem.get("appstate", (err, val) => {
             if (!err && val) {
-                withAppstate(val, callback);
+                withAppstate(val.toString(), callback);
             } else {
                 withCreds(callback);
             }
         });
     }
-}
-
-/**
- * @callback genericErrCb
- * @param {string} err Message specifying the error (or null if none)
- */
-
-/**
- * @callback errDataCb
- * @param {string} err Message specifying the error (or null if none)
- * @param {Object} success Data returned from the successful operation
- */
+};
 
 /**
  * Dumps the current login into a specified file.
  * 
- * @param {string} filename Name of the file specifying where to store the login
- * @param {genericErrCb} callback Callback to use after writing the file 
+ * @param filename Name of the file specifying where to store the login
+ * @param callback Callback to use after writing the file 
  */
-export function dumpLogin(filename, callback) {
+export const dumpLogin = (filename: string, callback: GenericErrCallback): void => {
     mem.get("appstate", (err, val) => {
-        if (!err) {
+        if (!err && val) {
             writeFileSync(filename, val.toString());
         }
         callback(err);
     });
-}
+};
 
 /**
  * Reads a new login into memory from a file.
- * @param {string} filename Name of the file specifying where the imported login
+ * @param filename Name of the file specifying where the imported login
  * is stored
- * @param {genericErrCb} callback Callback to use after reading the login
+ * @param callback Callback to use after reading the login
  */
-export function loadLogin(filename, callback) {
+export const loadLogin = (filename: string, callback: GenericErrCallback): void => {
     readFile(filename, (err, val) => {
         if (!err) {
-            mem.set("appstate", JSON.stringify(JSON.parse(val)));
+            mem.set("appstate", JSON.stringify(JSON.parse(val.toString())), {});
         }
         callback(err);
     });
-}
+};
 
 /**
  * Logs out of Facebook.
- * @param {errDataCb} callback
+ * @param callback
  */
-export function logout(callback) {
+export const logout = (callback: ErrDataCallback): void => {
     mem.delete("appstate", err => {
         let success = true;
         if (err) {
@@ -212,27 +187,27 @@ export function logout(callback) {
         }
         callback(err, success);
     });
-}
+};
 
 /**
  * Converts a (NodeJS) facebook-chat-api appstate into a (Python) fbchat
  * session. See the examples/ directory for how this can be used to create
  * an fbchat bot with BotCore.
  * 
- * @param {string} filename Name of the file whose location contains the
+ * @param filename Name of the file whose location contains the
  * appstate data to be converted
- * @param {errDataCb} callback Callback to use after conversion completed,
+ * @param callback Callback to use after conversion completed,
  * passed the converted session
  */
-export function convert(filename, callback) {
+export const convert = (filename: string, callback: ErrDataCallback): void => {
     readFile(filename, (err, file) => {
         if (err) {
             callback(err);
         } else {
             // Extract the required information from the appstate
-            let data = JSON.parse(file);
-            let attrs = ["c_user", "datr", "fr", "sb", "spin", "xs"];
-            let output = attrs.reduce((obj, key) => {
+            const data = JSON.parse(file.toString());
+            const attrs = ["c_user", "datr", "fr", "sb", "spin", "xs"];
+            const output = attrs.reduce((obj: StringDict, key) => {
                 obj[key] = searchAttribute(data, key);
                 return obj;
             }, {});
@@ -241,24 +216,24 @@ export function convert(filename, callback) {
             callback(null, output);
         }
     });
-}
+};
 
 /**
  * A variant of `convert` that directly outputs the converted session to a file.
  * 
- * @param {string} appstate Location of appstate to be converted
- * @param {string} output Where to place the converted session
- * @param {genericErrCb} callback Callback called after conversion
+ * @param appstate Location of appstate to be converted
+ * @param output Where to place the converted session
+ * @param callback Callback called after conversion
  */
-export function convertToFile(appstate, output, callback) {
-    this.convert(appstate, (err, session) => {
+export const convertToFile = (appstate: string, output: string, callback: GenericErrCallback): void => {
+    convert(appstate, (err, session) => {
         if (err) {
             callback(err);
         } else {
             writeFile(output, JSON.stringify(session), null, callback);
         }
     });
-}
+};
 
 /**
  * Exposes the underlying memjs memcache instance, which can be used for
@@ -270,9 +245,9 @@ export function convertToFile(appstate, output, callback) {
  * @returns {Object} The underlying BotCore [memjs](https://memjs.netlify.app)
  * instance
  */
-export function getMemCache() {
+export const getMemCache = (): Client => {
     return mem;
-}
+};
 
 /** 
  * facebook-chat-api appstates are an array of objects containing "key" and
@@ -281,28 +256,29 @@ export function getMemCache() {
  * This function searches and extracts the value for the given key, discarding
  * the other information.
  * 
- * @param {Object} data facebook-chat-api appstate
- * @param {string} key The key to locate
+ * @param data facebook-chat-api appstate
+ * @param key The key to locate
  * @returns {string} The value of the key (or null if not found)
 */
-function searchAttribute(data, key) {
+function searchAttribute(data: Array<StringDict>, key: string): string {
     for (let i = 0; i < data.length; i++) {
         if (data[i].key == key) {
             return data[i].value;
         }
     }
+    return "";
 }
 
 if (require.main === module) {
-    const parser = new ArgumentParser({ addHelp: true });
-    parser.addArgument("--MEMCACHIER-USERNAME", { required: true });
-    parser.addArgument("--MEMCACHIER-PASSWORD", { required: true });
-    parser.addArgument("--MEMCACHIER-SERVERS", { required: true });
-    parser.addArgument("--logout", { nargs: 0 });
-    parser.addArgument("--dump-login", { nargs: 0 });
-    parser.addArgument("--load-login", { nargs: 0 });
-    parser.addArgument("--convert-login", { nargs: 0 });
-    const args = parser.parseArgs();
+    const parser = new ArgumentParser({ add_help: true });
+    parser.add_argument("--MEMCACHIER-USERNAME", { required: true });
+    parser.add_argument("--MEMCACHIER-PASSWORD", { required: true });
+    parser.add_argument("--MEMCACHIER-SERVERS", { required: true });
+    parser.add_argument("--logout", { nargs: 0 });
+    parser.add_argument("--dump-login", { nargs: 0 });
+    parser.add_argument("--load-login", { nargs: 0 });
+    parser.add_argument("--convert-login", { nargs: 0 });
+    const args = parser.parse_args();
 
     login(args, () => {
         if (args.logout !== null) {
@@ -318,7 +294,7 @@ if (require.main === module) {
                 process.exit();
             });
         } else if (args.convert_login !== null) {
-            this.convertToFile("appstate.json", "session.txt", () => {
+            convertToFile("appstate.json", "session.txt", () => {
                 process.exit();
             });
         } else {

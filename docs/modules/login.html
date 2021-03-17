@@ -1,0 +1,437 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>login | messenger-botcore</title>
+	<meta name="description" content="Documentation for messenger-botcore">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">messenger-botcore</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">messenger-botcore</a>
+				</li>
+				<li>
+					<a href="login.html">login</a>
+				</li>
+			</ul>
+			<h1>Module login</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Login API
+							Provides various utilities for managing the login process, including
+						login/logout and import/export of appstate files.</p>
+					</div>
+					<p>Encapsulates the login by caching the appstate in memory.</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#convert" class="tsd-kind-icon">convert</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#converttofile" class="tsd-kind-icon">convert<wbr>ToFile</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#dumplogin" class="tsd-kind-icon">dump<wbr>Login</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#getmemcache" class="tsd-kind-icon">get<wbr>Mem<wbr>Cache</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#loadlogin" class="tsd-kind-icon">load<wbr>Login</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#login-1" class="tsd-kind-icon">login</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="login.html#logout" class="tsd-kind-icon">logout</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="convert" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> convert</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">convert<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#errdatacallback" class="tsd-signature-type" data-tsd-kind="Type alias">ErrDataCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L195">login.ts:195</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts a (NodeJS) facebook-chat-api appstate into a (Python) fbchat
+										session. See the examples/ directory for how this can be used to create
+									an fbchat bot with BotCore.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>filename: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the file whose location contains the
+										appstate data to be converted</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="types.html#errdatacallback" class="tsd-signature-type" data-tsd-kind="Type alias">ErrDataCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Callback to use after conversion completed,
+										passed the converted session</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="converttofile" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> convert<wbr>ToFile</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>ToFile<span class="tsd-signature-symbol">(</span>appstate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, output<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L221">login.ts:221</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A variant of <code>convert</code> that directly outputs the converted session to a file.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>appstate: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Location of appstate to be converted</p>
+									</div>
+								</li>
+								<li>
+									<h5>output: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Where to place the converted session</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Callback called after conversion</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="dumplogin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> dump<wbr>Login</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">dump<wbr>Login<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L144">login.ts:144</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Dumps the current login into a specified file.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>filename: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the file specifying where to store the login</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Callback to use after writing the file</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getmemcache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Mem<wbr>Cache</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Mem<wbr>Cache<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Client</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L241">login.ts:241</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Exposes the underlying memjs memcache instance, which can be used for
+									temporary storage. Use wisely, or you may break your BotCore installation!</p>
+								</div>
+								<blockquote>
+									<p>NOTE: if you call this before logging in with <a href="login.html#login-1">login</a>,
+									it will return nothing; the memcache is not initialized until you log in.</p>
+								</blockquote>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Client</span></h4>
+							<p>The underlying BotCore <a href="https://memjs.netlify.app">memjs</a>
+							instance</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="loadlogin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> load<wbr>Login</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Login<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L159">login.ts:159</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Reads a new login into memory from a file.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>filename: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the file specifying where the imported login
+										is stored</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="types.html#genericerrcallback" class="tsd-signature-type" data-tsd-kind="Type alias">GenericErrCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Callback to use after reading the login</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="login-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> login</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">login<span class="tsd-signature-symbol">(</span>credentials<span class="tsd-signature-symbol">: </span><a href="../interfaces/types.logincredentials.html" class="tsd-signature-type" data-tsd-kind="Interface">LoginCredentials</a>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#logincallback" class="tsd-signature-type" data-tsd-kind="Type alias">LoginCallback</a>, forceCreds<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">IOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L85">login.ts:85</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Call this to initialize the login module and log into Facebook using
+										<a href="https://github.com/Schmavery/facebook-chat-api">facebook-chat-api</a>.
+									See examples/ for example usage.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>credentials: <a href="../interfaces/types.logincredentials.html" class="tsd-signature-type" data-tsd-kind="Interface">LoginCredentials</a></h5>
+								</li>
+								<li>
+									<h5>callback: <a href="types.html#logincallback" class="tsd-signature-type" data-tsd-kind="Type alias">LoginCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>called after login completed (successfully or unsuccessfully)</p>
+									</div>
+								</li>
+								<li>
+									<h5>forceCreds: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if true, forces a login with credentials even if appstate exists</p>
+									</div>
+								</li>
+								<li>
+									<h5>options: <span class="tsd-signature-type">IOptions</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>any options you wish to pass to the API on login;
+											by default, sets <code>logLevel</code> to <code>error</code> and <code>forceLogin</code> to <code>true</code> (auto-approves errors asking
+										for approval of recent logins for simplicity)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="logout" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> logout</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">logout<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><a href="types.html#errdatacallback" class="tsd-signature-type" data-tsd-kind="Type alias">ErrDataCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/login.ts#L172">login.ts:172</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Logs out of Facebook.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>callback: <a href="types.html#errdatacallback" class="tsd-signature-type" data-tsd-kind="Type alias">ErrDataCallback</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="banned.html">banned</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="login.html">login</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="monitoring.html">monitoring</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="types.html">types</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#convert" class="tsd-kind-icon">convert</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#converttofile" class="tsd-kind-icon">convert<wbr>ToFile</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#dumplogin" class="tsd-kind-icon">dump<wbr>Login</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#getmemcache" class="tsd-kind-icon">get<wbr>Mem<wbr>Cache</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#loadlogin" class="tsd-kind-icon">load<wbr>Login</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#login-1" class="tsd-kind-icon">login</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="login.html#logout" class="tsd-kind-icon">logout</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

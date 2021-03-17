@@ -1,0 +1,292 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>monitoring | messenger-botcore</title>
+	<meta name="description" content="Documentation for messenger-botcore">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">messenger-botcore</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">messenger-botcore</a>
+				</li>
+				<li>
+					<a href="monitoring.html">monitoring</a>
+				</li>
+			</ul>
+			<h1>Module monitoring</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Monitoring API</p>
+					</div>
+					<p>Provides a basic utility for monitoring a running bot process. It is
+						configurable, with options to notify a maintainer if the bot goes down,
+						automatically retry logins for stale processes, and restart the bot process
+					entirely if all else fails.</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="monitoring.html#cancelmonitoring" class="tsd-kind-icon">cancel<wbr>Monitoring</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="monitoring.html#criticalerror" class="tsd-kind-icon">critical<wbr>Error</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="monitoring.html#monitor" class="tsd-kind-icon">monitor</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="cancelmonitoring" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> cancel<wbr>Monitoring</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">cancel<wbr>Monitoring<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/monitoring.ts#L63">monitoring.ts:63</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Cancels the monitoring of the current bot process.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="criticalerror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> critical<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">critical<wbr>Error<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/monitoring.ts#L75">monitoring.ts:75</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Safe function to call from other packages that will alert the maintainer if
+									monitoring is on, and no-op otherwise.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>msg: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Message for the maintainer about the issue</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="monitor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> monitor</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">monitor<span class="tsd-signature-symbol">(</span>apiInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">API</span>, maintainerId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, botName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, credentialsObj<span class="tsd-signature-symbol">: </span><a href="../interfaces/types.logincredentials.html" class="tsd-signature-type" data-tsd-kind="Interface">LoginCredentials</a>, botProcessRef<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Process</span>, retryLoginCallback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>api<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, pingIntervalInMinutes<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/monitoring.ts#L39">monitoring.ts:39</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Begins monitoring a specified API instance.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>apiInstance: <span class="tsd-signature-type">API</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An instance of the facebook-chat-api to monitor</p>
+									</div>
+								</li>
+								<li>
+									<h5>maintainerId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>User ID of the maintainer to notify on failures</p>
+									</div>
+								</li>
+								<li>
+									<h5>botName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the bot running</p>
+									</div>
+								</li>
+								<li>
+									<h5>credentialsObj: <a href="../interfaces/types.logincredentials.html" class="tsd-signature-type" data-tsd-kind="Interface">LoginCredentials</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object containing the user credentials</p>
+									</div>
+								</li>
+								<li>
+									<h5>botProcessRef: <span class="tsd-signature-type">Process</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Node.js process to monitor (optional)</p>
+									</div>
+								</li>
+								<li>
+									<h5>retryLoginCallback: <span class="tsd-signature-symbol">(</span>api<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A callback to send a new API
+											instance to if login failed and a re-attempted login succeeded (optional –
+										omitting this callback is equivalent to disabling the retry login feature)</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>api<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>api: <span class="tsd-signature-type">API</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5>pingIntervalInMinutes: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="banned.html">banned</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="login.html">login</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="monitoring.html">monitoring</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="types.html">types</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="monitoring.html#cancelmonitoring" class="tsd-kind-icon">cancel<wbr>Monitoring</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="monitoring.html#criticalerror" class="tsd-kind-icon">critical<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="monitoring.html#monitor" class="tsd-kind-icon">monitor</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

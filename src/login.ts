@@ -1,5 +1,6 @@
 /**
  * Login API
+ * 
  * Provides various utilities for managing the login process, including
  * login/logout and import/export of appstate files.
  * 
@@ -71,20 +72,13 @@ let mem: Client;
  */
 
 /**
- * @typedef {Object} apiObj
- * @description An API instance of the facebook-chat-api (see 
- * [here](https://github.com/Schmavery/facebook-chat-api) for details)
- */
-
-/**
  * Call this to initialize the login module and log into Facebook using
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
  * See examples/ for example usage.
  * 
  * @param credentials
  * @param callback called after login completed (successfully or unsuccessfully)
- * @param {boolean} [forceCreds=false] if true, forces a login with credentials even if
- * appstate exists
+ * @param [forceCreds=false] if true, forces a login with credentials even if appstate exists
  * @param [options=defaultOptions] any options you wish to pass to the API on login;
  * by default, sets `logLevel` to `error` and `forceLogin` to `true` (auto-approves errors asking
  * for approval of recent logins for simplicity)

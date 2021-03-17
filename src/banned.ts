@@ -1,5 +1,6 @@
 /**
  * Ban API
+ * 
  * Provides various utilities for universally banning/unbanning users across
  * any number of bot instances
  * 
@@ -22,7 +23,7 @@ let cachedUserList: BannedUserList;
  * 
  * @param callback 
  */
-export function getUsers(callback: UsersCallback): void {
+export const getUsers = (callback: UsersCallback): void => {
     let usedCache = false;
     if (cachedUserList !== undefined) {
         usedCache = true;
@@ -37,14 +38,14 @@ export function getUsers(callback: UsersCallback): void {
 
         if (!usedCache) callback(null, cachedUserList);
     });
-}
+};
 
 /**
  * Tests whether the given user is banned
  * @param userId 
  * @param callback 
  */
-export function isUser(userId: string, callback: IsBannedCallback): void {
+export const isUser = (userId: string, callback: IsBannedCallback): void => {
     getUsers((err, users) => {
         if (err) {
             // In case of a db error, return that the user is banned to be safe
@@ -57,7 +58,7 @@ export function isUser(userId: string, callback: IsBannedCallback): void {
         const isBanned = users ? users.includes(userId) : false;
         callback(isBanned, users);
     });
-}
+};
 
 /**
  * Adds the user represented by the provided user ID to the list of banned
@@ -66,7 +67,7 @@ export function isUser(userId: string, callback: IsBannedCallback): void {
  * @param userId ID of the user to ban
  * @param callback
  */
-export function addUser(userId: string, callback: SuccessCallback): void {
+export const addUser = (userId: string, callback: SuccessCallback): void => {
     const mem = getMemCache();
 
     isUser(userId, (isBanned, users) => {
@@ -77,7 +78,7 @@ export function addUser(userId: string, callback: SuccessCallback): void {
         }
         callback(!isBanned);
     });
-}
+};
 
 /**
  * Removes the user represented by the provided user ID to the list of banned
@@ -86,7 +87,7 @@ export function addUser(userId: string, callback: SuccessCallback): void {
  * @param userId ID of the user to ban
  * @param callback
  */
-export function removeUser(userId: string, callback: SuccessCallback): void {
+export const removeUser = (userId: string, callback: SuccessCallback): void => {
     const mem = getMemCache();
 
     isUser(userId, (isBanned, users) => {
@@ -97,7 +98,7 @@ export function removeUser(userId: string, callback: SuccessCallback): void {
         }
         callback(isBanned);
     });
-}
+};
 
 /**
  * Utility function to quickly check whether to accept a message based on
@@ -106,6 +107,6 @@ export function removeUser(userId: string, callback: SuccessCallback): void {
  * @param msg 
  * @param callback 
  */
-export function isMessage(msg: Facebook.IReceivedMessage, callback: IsBannedCallback): void {
+export const isMessage = (msg: Facebook.IReceivedMessage, callback: IsBannedCallback): void => {
     isUser(msg.senderID, callback);
-}
+};

@@ -9,38 +9,42 @@
  * @module monitoring
 */
 
-const { spawn } = require("child_process");
-const login = require("./login");
+import { spawn } from "child_process";
+import { login } from "./login";
+import { LoginCredentials } from "./types";
 
 // Required monitoring config vars
-let monitoringInterval;
-let api;
-let maintainer;
-let name;
-let credentials;
-let botProcess;
-let retryFunc;
-
-/**
- * @callback retryLoginCallback
- * @param {apiObj} api A new instance of the facebook-chat-api after a successful login
- */
+let monitoringInterval: NodeJS.Timeout;
+let api: Facebook.API;
+let maintainer: string;
+let name: string;
+let credentials: LoginCredentials;
+let botProcess: NodeJS.Process;
+let retryFunc: (api: Facebook.API) => void;
 
 /**
  * Begins monitoring a specified API instance.
  * 
- * @param {apiObj} apiInstance An instance of the facebook-chat-api to monitor
- * @param {string} maintainerId User ID of the maintainer to notify on failures
- * @param {string} botName Name of the bot running
- * @param {credentialsObj} credentialsObj Object containing the user credentials
- * @param {process} botProcessRef Node.js process to monitor (optional)
- * @param {retryLoginCallback} retryLoginCallback A callback to send a new API
+ * @param apiInstance An instance of the facebook-chat-api to monitor
+ * @param maintainerId User ID of the maintainer to notify on failures
+ * @param botName Name of the bot running
+ * @param credentialsObj Object containing the user credentials
+ * @param botProcessRef Node.js process to monitor (optional)
+ * @param retryLoginCallback A callback to send a new API
  * instance to if login failed and a re-attempted login succeeded (optional –
  * omitting this callback is equivalent to disabling the retry login feature)
- * @param {number} [pingIntervalInMinutes=10] The number of minutes between
+ * @param [pingIntervalInMinutes=10] The number of minutes between
  * checks that the bot is still running
  */
-exports.monitor = (apiInstance, maintainerId, botName, credentialsObj, botProcessRef, retryLoginCallback, pingIntervalInMinutes = 10) => {
+export const monitor = (
+    apiInstance: Facebook.API,
+    maintainerId: string,
+    botName: string,
+    credentialsObj: LoginCredentials,
+    botProcessRef: NodeJS.Process,
+    retryLoginCallback: (api: Facebook.API) => void,
+    pingIntervalInMinutes = 10,
+): void => {
     if (monitoringInterval) return console.error("Already monitoring an instance");
 
     const pingInterval = pingIntervalInMinutes * 60 * 1000;
@@ -51,48 +55,48 @@ exports.monitor = (apiInstance, maintainerId, botName, credentialsObj, botProces
     credentials = credentialsObj;
     botProcess = botProcessRef;
     retryFunc = retryLoginCallback;
-}
+};
 
 /**
  * Cancels the monitoring of the current bot process.
  */
-exports.cancelMonitoring = () => {
+export const cancelMonitoring = (): void => {
     if (monitoringInterval) {
         clearInterval(monitoringInterval);
     }
-}
+};
 
 /**
  * Safe function to call from other packages that will alert the maintainer if
  * monitoring is on, and no-op otherwise.
  * 
- * @param {string} msg Message for the maintainer about the issue
+ * @param msg Message for the maintainer about the issue
  */
-exports.criticalError = msg => {
+export const criticalError = (msg: string): void => {
     if (maintainer) {
         api.sendMessage(`Critical error detected: ${msg}`, maintainer);
     }
-}
+};
 
 
 function monitorLoop() {
     // Try a basic operation to see if login is still valid
     try {
-        api.getFriendsList((err, _) => {
+        api.getFriendsList((err) => {
             if (err) {
                 sendError(err);
             }
-        })
+        });
     } catch (e) {
         sendError(e);
     }
 }
 
-function sendError(e) {
+const sendError = (e: Facebook.IError): void => {
     const errMsg = `Error detected with ${name}: ${JSON.stringify(e)}.`;
     // Attempt to re-login
     if (retryFunc) {
-        login.login(credentials, (err, api) => {
+        login(credentials, (err, api) => {
             if (!err) {
                 retryFunc(api);
                 api.sendMessage(`${errMsg} Re-login successful; passing new login to retry callback...`, maintainer);
@@ -100,18 +104,18 @@ function sendError(e) {
                 // Login failed; just restart the process
                 restartProcess();
             }
-        })
+        });
     } else {
         // Attempt to send message to maintainer, although it will likely fail
         api.sendMessage(errMsg, maintainer);
         restartProcess();
     }
-}
+};
 
-function restartProcess() {
+const restartProcess = (): void => {
     spawn(botProcess.argv[1], botProcess.argv.slice(2), {
         detached: true,
-        stdio: ['ignore', out, err]
+        stdio: ["ignore"]
     }).unref();
     botProcess.exit();
-}
+};

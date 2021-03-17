@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@types/argparse": "^2.0.5",
-    "@types/facebook-chat-api": "github:legion44/typed-facebook-chat-api",
+    "@types/facebook-chat-api": "github:AstroCB/typed-facebook-chat-api#update-send-message",
     "@types/memjs": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",

@@ -27,51 +27,6 @@ const defaultOptions: Facebook.IOptions = {
 let mem: Client;
 
 /**
- * @typedef {Object} credentialsObj
- * @property {string} MEMCACHIER_USERNAME Memcachier username (from dashboard) for storage
- * @property {string} MEMCACHIER_PASSWORD Memcachier password (from dashboard) for storage
- * @property {string} MEMCACHIER_SERVERS Memcachier servers (from dashboard) for storage
- * @property {string} FACEBOOK_EMAIL Facebook account email for login (optional if already logged in once)
- * @property {string} FACEBOOK_PASSWORD Facebook account password for login (optional if already logged in once)
- * @description The credentials object is required for logging in to any application using BotCore. The
- * idea of it is to store your (sensitive) credentials separately from the source of your project, in a
- * place that won't be accidentally committed to a repo and published for the world to see. It consists
- * of several required keys that allow BotCore to log in to both Facebook and the MemCachier service
- * (used to cache logins) on your behalf. The keys are listed and explained below.
- * 
- * > **NOTE**: to obtain the values for the `MEMCACHIER_` variables, you must [sign up for a free
- * MemCachier account](https://www.memcachier.com/users/signup) and create a cache. From there, you
- * will be able to retrieve the requisite info from your dashboard.
- * 
- * I recommend the following two methods for storing your credentials object due to their ease of use:
- * 
- * 1. *Environment variables*: you can store these keys as environment variables, which will prevent
- * them from being stored in any file in your project. When logging in, simply pass `process.env` as your
- * credentials object, because it will contain all of the required keys needed to log in successfully!
- * You can find an example of how to configure your credentials this way in `examples/credentials.sh`
- * in the BotCore repo.
- * 
- * 2. *A gitignored credentials file*: you can create a file (`credentials.js` or similar) that contains
- * all of your required credentials keys as exported variables, and then simply import this as a JS
- * module wherever you need to log in. Don't forget to add this credentials file to your `.gitignore`
- * so that your credentials aren't exposed! You can find an example of how to configure your credentials
- * this way in `examples/credentials.js` in the BotCore repo.
- * 
- * These are two of many possible ways you could choose to store this information. Keep in mind that
- * regardless of which method you choose, you will have to eventually pass a JavaScript object containing
- * the following keys to the {@link login} function, so you will need to be able to access this
- * information at runtime.
- * 
- * Also keep in mind that the `FACEBOOK_EMAIL` and `FACEBOOK_PASSWORD` keys are only required for login
- * if you do not have an active Facebook login session stored in BotCore (i.e. you have logged in
- * recently, and Facebook hasn't decided to terminate your session yet). BotCore caches your recent
- * logins to prevent too many hard (username/password) logins, unless you use the `forceLogin` option.
- * If you are using several bots with BotCore, consider storing your `FACEBOOK_EMAIL` and
- * `FACEBOOK_PASSWORD` keys with only one of them, and only using your `MEMCACHIER_` variables to log in
- * from other bots.
- */
-
-/**
  * Call this to initialize the login module and log into Facebook using
  * [facebook-chat-api](https://github.com/Schmavery/facebook-chat-api).
  * See examples/ for example usage.
@@ -105,6 +60,10 @@ export const login = (credentials: LoginCredentials, callback: LoginCallback, fo
     }
     function withCreds(callback: LoginCallback) {
         console.log("Logging in with credentials...");
+        if (!credentials.FACEBOOK_EMAIL || !credentials.FACEBOOK_PASSWORD) {
+            return console.error("Fatal error: no login credentials provided");
+        }
+
         messenger({
             email: credentials.FACEBOOK_EMAIL,
             password: credentials.FACEBOOK_PASSWORD

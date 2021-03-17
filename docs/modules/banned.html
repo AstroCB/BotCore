@@ -68,10 +68,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Ban API
-							Provides various utilities for universally banning/unbanning users across
-						any number of bot instances</p>
+						<p>Ban API</p>
 					</div>
+					<p>Provides various utilities for universally banning/unbanning users across
+					any number of bot instances</p>
 					<p>Note: because this API relies on the data store initialized in the login
 						module, none of its functions will work unless you&#39;ve logged in already
 					via a call to <code>login.login</code>.</p>
@@ -98,7 +98,7 @@
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="adduser" class="tsd-anchor"></a>
-					<h3>add<wbr>User</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> add<wbr>User</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">add<wbr>User<span class="tsd-signature-symbol">(</span>userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#successcallback" class="tsd-signature-type" data-tsd-kind="Type alias">SuccessCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
@@ -106,7 +106,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/banned.ts#L69">banned.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/8fb38cc/src/banned.ts#L70">banned.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -135,7 +135,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="getusers" class="tsd-anchor"></a>
-					<h3>get<wbr>Users</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Users</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Users<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><a href="types.html#userscallback" class="tsd-signature-type" data-tsd-kind="Type alias">UsersCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
@@ -143,7 +143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/banned.ts#L25">banned.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/8fb38cc/src/banned.ts#L26">banned.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -165,15 +165,15 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="ismessage" class="tsd-anchor"></a>
-					<h3>is<wbr>Message</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> is<wbr>Message</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Message<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Facebook.IReceivedMessage</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#isbannedcallback" class="tsd-signature-type" data-tsd-kind="Type alias">IsBannedCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Message<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IReceivedMessage</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#isbannedcallback" class="tsd-signature-type" data-tsd-kind="Type alias">IsBannedCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/banned.ts#L109">banned.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/8fb38cc/src/banned.ts#L110">banned.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -185,7 +185,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>msg: <span class="tsd-signature-type">Facebook.IReceivedMessage</span></h5>
+									<h5>msg: <span class="tsd-signature-type">IReceivedMessage</span></h5>
 								</li>
 								<li>
 									<h5>callback: <a href="types.html#isbannedcallback" class="tsd-signature-type" data-tsd-kind="Type alias">IsBannedCallback</a></h5>
@@ -199,7 +199,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="isuser" class="tsd-anchor"></a>
-					<h3>is<wbr>User</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> is<wbr>User</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>User<span class="tsd-signature-symbol">(</span>userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#isbannedcallback" class="tsd-signature-type" data-tsd-kind="Type alias">IsBannedCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
@@ -207,7 +207,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/banned.ts#L47">banned.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/8fb38cc/src/banned.ts#L48">banned.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -232,7 +232,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="removeuser" class="tsd-anchor"></a>
-					<h3>remove<wbr>User</h3>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> remove<wbr>User</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">remove<wbr>User<span class="tsd-signature-symbol">(</span>userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="types.html#successcallback" class="tsd-signature-type" data-tsd-kind="Type alias">SuccessCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
@@ -240,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/988e641/src/banned.ts#L89">banned.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/AstroCB/BotCore/blob/8fb38cc/src/banned.ts#L90">banned.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

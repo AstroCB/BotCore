@@ -1,8 +1,8 @@
 // Login API
-export * from "./src/login";
+export * as login from "./src/login";
 
 // Monitoring API
-export * from "./src/monitoring";
+export * as monitoring from "./src/monitoring";
 
 // Ban API
-export * from "./src/banned";
+export * as banned from "./src/banned";

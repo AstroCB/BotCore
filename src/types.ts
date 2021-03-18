@@ -76,14 +76,14 @@ export type StringDict = { [key: string]: string };
  * @param err indicates errors (null if user retrieval is successful)
  * @param users list of IDs of users currently banned in the system
 */
-export type UsersCallback = (err: Error?, users?: BannedUserList?) => void;
+export type UsersCallback = (err: Error | null, users?: BannedUserList | null) => void;
 
 /**
  * @callback IsBannedCallback
  * @param isBanned true if the user is banned, false otherwise
  * @param users list of IDs of users currently banned in the system
 */
-export type IsBannedCallback = (isBanned: boolean, users?: string[]?) => void;
+export type IsBannedCallback = (isBanned: boolean, users?: string[] | null) => void;
 
 /**
  * @callback SuccessCallback
@@ -105,7 +105,7 @@ export type LoginCallback = (err: Facebook.ILoginError, api: Facebook.API) => vo
  * @callback GenericErrCallback
  * @param err Message specifying the error (or null if none)
  */
-export type GenericErrCallback = (err: Error?) => void;
+export type GenericErrCallback = (err: Error | null) => void;
 
 /**
  * @callback ErrDataCallback
@@ -113,4 +113,4 @@ export type GenericErrCallback = (err: Error?) => void;
  * @param success Data returned from the successful operation
  */
 
-export type ErrDataCallback = (err: Error?, data?: unknown) => void;
+export type ErrDataCallback = (err: Error | null, data?: unknown) => void;

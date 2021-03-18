@@ -1,12 +1,12 @@
 {
   "name": "messenger-botcore",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A collection of tools for writing Facebook Messenger bots.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "tsc; cp src/types.d.ts dist/src/"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

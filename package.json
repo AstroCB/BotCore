@@ -29,7 +29,6 @@
   "dependencies": {
     "argparse": "^1.0.10",
     "facebook-chat-api": "github:AstroCB/facebook-chat-api#lookup-by-mid",
-    "fca-unofficial": "github:fca-unofficial/fca-unofficial",
     "memjs": "^1.2.2"
   },
   "devDependencies": {

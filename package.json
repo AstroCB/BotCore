@@ -1,6 +1,6 @@
 {
   "name": "messenger-botcore",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A collection of tools for writing Facebook Messenger bots.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
